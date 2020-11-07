@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
 
     val ADDRESS_WALLET = preferencesKey<String>("address_wallet")
-    private val _address: MutableLiveData<String> = MutableLiveData()
+    private val _address: MutableLiveData<String> = MutableLiveData("")
     val address :LiveData<String> = _address
 
     private val _response : MutableLiveData<Result.Success> = MutableLiveData()
@@ -46,16 +46,17 @@ class MainViewModel : ViewModel() {
                     currentPreferences[ADDRESS_WALLET] ?: ""
                 }
             _address.value = myCounterFlow.first()
+            address.value?.let { setAddress(it) }
         }
         address.value?.let { Log.e("address: ", it) }
     }
 
     companion object {
-        private var address =""
+        private var addressSt =""
         private fun setAddress(addressNew:String) {
-            address = addressNew
+            addressSt = addressNew
         }
-        fun getAddress() = address
+        fun getAddress() = addressSt
     }
    /* private val _intFlow = MutableStateFlow(0)
     val intFlow: StateFlow<Int> = _intFlow
