@@ -60,7 +60,12 @@ class WalletFragment : Fragment() {
         )
         receiveButton.setOnClickListener {
             val dialogFragment = ReceiveDialogFragment()
-            activity?.supportFragmentManager?.let { it1 -> dialogFragment.show(it1, "ReceiveDialogFragment") }
+            activity?.supportFragmentManager?.let { it1 ->
+                dialogFragment.show(
+                    it1,
+                    "ReceiveDialogFragment"
+                )
+            }
         }
         amountText = root.findViewById(R.id.balance_text)
 
