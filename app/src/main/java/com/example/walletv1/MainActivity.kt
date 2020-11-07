@@ -74,7 +74,7 @@ progressView.startAnimation()
         val body = RetrofitClientInstance.instance.postNewWallet()
         if (body.isSuccessful) {
             body.body()?.let {
-                sh(context, it)
+                //sh(context, it)
                 viewModel.setResponse(it, dataStore) }
         } else {
             withContext(Dispatchers.Main) {

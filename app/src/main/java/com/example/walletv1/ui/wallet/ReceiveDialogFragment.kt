@@ -28,10 +28,8 @@ class ReceiveDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(
-            activity!!
-        )
-        customView = layoutInflater.inflate(R.layout.receive_dialog_fragment, null)
+       
+        customView = activity!!.layoutInflater.inflate(R.layout.receive_dialog_fragment, null)
         customView.clipToOutline = true
         val address = customView.findViewById<Button>(R.id.address_dialog)
         address.text = MainViewModel.getAddress()

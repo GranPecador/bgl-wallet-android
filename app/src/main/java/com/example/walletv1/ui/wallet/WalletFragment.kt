@@ -1,5 +1,6 @@
 package com.example.walletv1.ui.wallet
 
+import android.app.Fragment.instantiate
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.createDataStore
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.Fragment.instantiate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,7 +60,7 @@ class WalletFragment : Fragment() {
         )
         receiveButton.setOnClickListener {
             val dialogFragment = ReceiveDialogFragment()
-            dialogFragment.show(activity!!.supportFragmentManager, "ReceiveDialogFragment")
+            activity?.supportFragmentManager?.let { it1 -> dialogFragment.show(it1, "ReceiveDialogFragment") }
         }
         amountText = root.findViewById(R.id.balance_text)
 
