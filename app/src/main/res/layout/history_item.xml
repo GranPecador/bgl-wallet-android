@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/history_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="@dimen/space_between_items_recycler"
+    android:background="@drawable/rounded_corners"
+    android:paddingBottom="@dimen/space_between_items_recycler">
+
+    <ImageView
+        android:id="@+id/icon_category_history_item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_receive_icon_item" />
+
+    <TextView
+        android:id="@+id/category_history_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_between_items_recycler"
+        android:text="Receive"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/icon_category_history_item_image"
+        app:layout_constraintTop_toTopOf="@+id/icon_category_history_item_image" />
+
+    <TextView
+        android:id="@+id/amount_history_item_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:hint="-17,87 BGL "
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/date_history_item_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/date_history_item_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_between_items_recycler"
+        android:hint="04:11 07 Nov 2020"
+        android:textColor="@color/colorTextHistoryItem"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_category_history_item_image"
+        app:layout_constraintStart_toEndOf="@+id/icon_category_history_item_image" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="fee_history_item_text,textView9,
+                                        confirmations_history_item_text, textView10,txid_history_item_text,textView8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="97dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:text="Fee"
+        android:textColor="@color/colorPrimary"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_history_item_text" />
+
+
+    <TextView
+        android:id="@+id/fee_history_item_text"
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        android:hint="0.321 BGL"
+        android:textColor="@color/colorTextHistoryItem"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/amount_history_item_text"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="97dp"
+        android:layout_height="16dp"
+        android:text="Confirmations"
+        android:textColor="@color/colorPrimary"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/confirmations_history_item_text"
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        android:hint="5"
+        android:textColor="@color/colorTextHistoryItem"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/amount_history_item_text"
+        app:layout_constraintStart_toEndOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/fee_history_item_text" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="97dp"
+        android:layout_height="16dp"
+        android:text="TxID: "
+        android:textColor="@color/colorPrimary"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/txid_history_item_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="1a3d49ebc3c7f264ce5f9bc756cb33bee0b51bad4c9180768f9d113cec2b30e9"
+        android:textColor="@color/colorTextHistoryItem"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/amount_history_item_text"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/confirmations_history_item_text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,62 @@
+package com.example.walletv1.ui.wallet
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.Group
+import androidx.recyclerview.widget.RecyclerView
+import com.example.walletv1.R
+import com.example.walletv1.model.HistoryItemModel
+
+class HistoryAdapterRecyclerView(val items: MutableList<HistoryItemModel> = mutableListOf()) : RecyclerView.Adapter<HistoryAdapterRecyclerView.HistoryViewHolder>() {
+
+    init {
+        notifyDataSetChanged()
+    }
+
+    fun addItems(newItems:List<HistoryItemModel>) {
+        items.addAll(newItems)
+        notifyDataSetChanged()
+    }
+
+    fun clearData(){
+        items.clear()
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.history_item, parent, false)
+        view.clipToOutline = true
+        return HistoryViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
+        holder.category.text = items[position].category
+        if (items[position].category != "Receive")
+            holder.iconCategoryView.setImageResource(R.drawable.ic_send_icon_item)
+
+        //holder.amountView.text = "${items[position].amount} BGL"
+        //holder.dateView.text = "${items[position].date}"
+        holder.itemView.setOnClickListener {
+            holder.group.visibility = if (holder.group.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+        }
+    }
+
+    override fun getItemCount(): Int = items.size
+
+    class HistoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        val category: TextView = itemView.findViewById(R.id.category_history_item_text)
+        val iconCategoryView:ImageView = itemView.findViewById(R.id.icon_category_history_item_image)
+        val amountView: TextView = itemView.findViewById(R.id.amount_history_item_text)
+        val dateView: TextView = itemView.findViewById(R.id.date_history_item_text)
+        val feeView: TextView = itemView.findViewById(R.id.fee_history_item_text)
+        val confirmationsView: TextView = itemView.findViewById(R.id.confirmations_history_item_text)
+        val txIdView: TextView = itemView.findViewById(R.id.txid_history_item_text)
+        val group : Group = itemView.findViewById(R.id.group)
+    }
+
+}
+
