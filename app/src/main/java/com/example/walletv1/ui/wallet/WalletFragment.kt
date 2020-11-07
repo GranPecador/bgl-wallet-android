@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.walletv1.R
+import com.example.walletv1.net.RetrofitClientInstance
 
 class WalletFragment : Fragment() {
 
@@ -73,8 +74,7 @@ class WalletFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = walletViewModel.adapterRecyclerView
         }
-
-
+        walletViewModel.getHistoryFromServer(context!!)
 
         return root
     }

@@ -7,6 +7,6 @@ data class HistoryItemModel(
     @SerializedName("category") val category: String,
     @SerializedName("confirmations") val confirmations: Int,
     @SerializedName("time") val time: Int,
-    @SerializedName("fee") val fee: Int = 0,
+    @SerializedName("fee") val fee: Double = 0.0,
     @SerializedName("txid") val txid: String
 )

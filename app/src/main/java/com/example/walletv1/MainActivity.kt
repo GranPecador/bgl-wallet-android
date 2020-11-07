@@ -18,6 +18,7 @@ import androidx.security.crypto.MasterKey
 import com.example.walletv1.net.Result
 import com.example.walletv1.net.RetrofitClientInstance
 import com.example.walletv1.utils.GetMKey
+import com.example.walletv1.utils.SecSharPref
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -25,14 +26,11 @@ import kotlinx.coroutines.withContext
 import com.github.rahatarmanahmed.cpv.CircularProgressView
 
 
-
-
-
 class MainActivity : AppCompatActivity() {
 
     lateinit var createWalletButton: Button
     private lateinit var viewModel: MainViewModel
-    private lateinit var progressView:CircularProgressView
+    private lateinit var progressView: CircularProgressView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Create the DataStore with Preferences DataStore
@@ -57,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         createWalletButton.setOnClickListener {
             createWalletButton.isEnabled = false
             progressView.visibility = View.VISIBLE
-progressView.startAnimation()
+            progressView.startAnimation()
             lifecycleScope.launch {
                 createWallet(dataStore, applicationContext)
             }
@@ -74,8 +72,9 @@ progressView.startAnimation()
         val body = RetrofitClientInstance.instance.postNewWallet()
         if (body.isSuccessful) {
             body.body()?.let {
-                //sh(context, it)
-                viewModel.setResponse(it, dataStore) }
+                sh(context, it)
+                viewModel.setResponse(it, dataStore)
+            }
         } else {
             withContext(Dispatchers.Main) {
                 Toast.makeText(applicationContext, "${body.code()}", Toast.LENGTH_LONG).show()
@@ -83,33 +82,9 @@ progressView.startAnimation()
         }
     }
 
-    fun sh(context: Context, result: Result.Success){
-        /*val masterKeyAlias = MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .setUserAuthenticationRequired(true, 1000)
-            .build()*/
-        val mk = GetMKey()
-        val sharedPreferences = mk.getmkeym(context)?.let {
-            EncryptedSharedPreferences.create(
-                context,
-                "secret_shared_prefs",
-                it, EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-            )
-        }
-        sharedPreferences?.let {
-            with(sharedPreferences.edit()){
-                putString("private_key", result.privateKey)
-                putString("address", result.address)
-                apply()
-            }
-
-            Log.e("shar_address", sharedPreferences.getString("address", "") ?: "")
-
-        }
-           // use the shared preferences and editor as you normally would
-
-
-
+    fun sh(context: Context, result: Result.Success) {
+        val shar = SecSharPref()
+        shar.setContext(context)
+        shar.putPrivateKeyAndAddress(result.privateKey, result.address)
     }
 }
