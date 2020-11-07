@@ -1,5 +1,6 @@
 package com.example.walletv1.ui.wallet
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -23,7 +24,7 @@ class WalletFragment : Fragment() {
     private lateinit var historyRecycler: RecyclerView
     private lateinit var sendButton: Button
     private lateinit var receiveButton: Button
-    private lateinit var amountText:TextView
+    private lateinit var amountText: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,9 +39,23 @@ class WalletFragment : Fragment() {
         walletViewModel.readCounter(dataStore)
 
         sendButton = root.findViewById(R.id.send_button)
-        sendButton.setBackgroundColor( ContextCompat.getColor(requireContext(), R.color.colorButAndItemWalletAtiva))
+        sendButton.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorButAndItemWalletAtiva
+            )
+        )
+        sendButton.setOnClickListener {
+            val intent = Intent(context, SendActivity::class.java)
+            startActivity(intent)
+        }
         receiveButton = root.findViewById(R.id.receive_button)
-        receiveButton.setBackgroundColor( ContextCompat.getColor(requireContext(), R.color.colorButAndItemWalletAtiva))
+        receiveButton.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorButAndItemWalletAtiva
+            )
+        )
         receiveButton.setOnClickListener {
             val dialogFragment = ReceiveDialogFragment()
             dialogFragment.show(activity!!.supportFragmentManager, "ReceiveDialogFragment")
@@ -48,7 +63,7 @@ class WalletFragment : Fragment() {
         amountText = root.findViewById(R.id.balance_text)
 
         //walletViewModel.getBalanceFromServer()
-        walletViewModel.amount.observe(viewLifecycleOwner){
+        walletViewModel.amount.observe(viewLifecycleOwner) {
             amountText.text = "${it.amountBGL}  BGL"
         }
         historyRecycler = root.findViewById(R.id.history_recycler)

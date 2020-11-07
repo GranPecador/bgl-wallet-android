@@ -44,8 +44,8 @@ class WalletViewModel() : ViewModel() {
 
     val adapterRecyclerView = HistoryAdapterRecyclerView(
         mutableListOf(
-            HistoryItemModel(1, "Receive", 4, 453, 344, "dgdff"),
-            HistoryItemModel(-14, "Send", 4, 453, 344, "dgdfjnjjjnjnjnjnjnbhbhbhbhhjhvgvgvhhgghgjgghghgggkf")
+            HistoryItemModel(1.0, "Receive", 4, 452342342, 344, "dgdff"),
+            HistoryItemModel(-14.0, "Send", 4, 453, 344, "dgdfjnjjjnjnjnjnjnbhbhbhbhhjhvgvgvhhgghgjgghghgggkf")
         ))
 
     private fun getBalanceFromServer() {
