@@ -11,11 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Walletv1">
-        <activity android:name=".ui.wallet.SendActivity"></activity>
+        <activity android:name=".ui.wallet.SendActivity" />
         <activity
             android:name=".WalletActivity"
             android:label="@string/title_activity_wallet" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.Walletv1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
