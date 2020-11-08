@@ -9,9 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.walletv1.MainViewModel
 import com.example.walletv1.model.AmountWalletModel
-import com.example.walletv1.model.HistoryItemModel
 import com.example.walletv1.net.RetrofitClientInstance
 import com.example.walletv1.utils.SecSharPref
 import kotlinx.coroutines.CoroutineScope

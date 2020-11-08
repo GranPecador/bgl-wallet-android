@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.example.walletv1.MainViewModel
 import com.example.walletv1.R
 import com.example.walletv1.utils.SecSharPref
 import com.google.zxing.BarcodeFormat

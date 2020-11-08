@@ -10,21 +10,23 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="178dp"
-        android:layout_height="228dp"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_marginTop="144dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/bgl_logo" />
+        app:srcCompat="@drawable/ic_logo" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome in BITGESELL!"
-        android:textColor="#c8c8c8"
-        android:textSize="30sp"
+        android:text="Welcome to Bitgessel!"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -33,20 +35,22 @@
 
     <Button
         android:id="@+id/create_wallet_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="32dp"
         android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:paddingEnd="20dp"
         android:paddingBottom="10dp"
-        android:text="Create Wallet"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Create new wallet"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        app:icon="@drawable/ic_wallet"
+        app:iconTint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.182" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <com.github.rahatarmanahmed.cpv.CircularProgressView
         android:id="@+id/progress_view"
