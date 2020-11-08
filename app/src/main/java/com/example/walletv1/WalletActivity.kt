@@ -9,5 +9,6 @@ class WalletActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wallet)
         title = "My Wallet"
+        supportActionBar?.elevation = 0f
     }
 }

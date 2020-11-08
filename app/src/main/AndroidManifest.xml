@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Walletv1">
+        <activity android:name=".MnemonicActivity"></activity>
         <activity android:name=".ui.wallet.SendActivity" />
         <activity
             android:name=".WalletActivity"

@@ -7,7 +7,7 @@ import androidx.security.crypto.MasterKey
 
 class SecSharPref {
 
-    fun setContext(context: Context){
+    fun setContext(context: Context) {
         create(context)
     }
 
@@ -36,15 +36,16 @@ class SecSharPref {
         )
     }
 
-    fun putPrivateKeyAndAddress(privateKey:String, address: String) {
-        sharedPreferences?.let {
-            with(sharedPreferences.edit()) {
-                putString("private_key", privateKey)
-                putString("address", address)
-                apply()
-            }
+    fun putPrivateKeyAndAddress(privateKey: String, address: String, mnemonic:String) {
+        with(sharedPreferences.edit()) {
+            putString("private_key", privateKey)
+            putString("address", address)
+            putString("mnemonic", mnemonic)
+            apply()
         }
     }
-    fun getAddress() : String =sharedPreferences.getString("address", "") ?: ""
-    fun getPrivateKey():String = sharedPreferences.getString("private_key", "") ?: ""
+
+    fun getAddress(): String = sharedPreferences.getString("address", "") ?: ""
+    fun getPrivateKey(): String = sharedPreferences.getString("private_key", "") ?: ""
+    fun getMnemonic(): String = sharedPreferences.getString("mnemonic", "") ?: ""
 }

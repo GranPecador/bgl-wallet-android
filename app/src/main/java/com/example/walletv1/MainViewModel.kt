@@ -29,7 +29,7 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             writeAddress(response.address, dataStore = dataStore)
         }
-        setAddress(response.address)
+        //setAddress(response.address)
     }
 
     // Write data to DataStore
@@ -46,19 +46,8 @@ class MainViewModel : ViewModel() {
                     currentPreferences[ADDRESS_WALLET] ?: ""
                 }
             _address.value = myCounterFlow.first()
-            address.value?.let { setAddress(it) }
         }
         address.value?.let { Log.e("address: ", it) }
     }
 
-    companion object {
-        private var addressSt =""
-        private fun setAddress(addressNew:String) {
-            addressSt = addressNew
-        }
-        fun getAddress() = addressSt
-    }
-   /* private val _intFlow = MutableStateFlow(0)
-    val intFlow: StateFlow<Int> = _intFlow
-    val intLiveData = intFlow.asLiveData()*/
 }

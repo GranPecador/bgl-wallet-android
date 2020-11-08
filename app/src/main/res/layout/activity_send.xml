@@ -4,9 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.wallet.SendActivity">
+    tools:context=".ui.wallet.SendActivity"
+    android:background="#34333C"
+    >
 
     <TextView
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,15 +29,16 @@
         android:hint="BGL"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id = "@+id/amount_sent_activity_edit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="match_parent"
             android:inputType="numberDecimal"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:textColor="@color/white"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -50,19 +55,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintCircleRadius="35dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id = "@+id/address_sent_activity_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:textColor="@color/white"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

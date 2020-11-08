@@ -34,21 +34,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Create the DataStore with Preferences DataStore
-        val dataStore: DataStore<Preferences> = applicationContext.createDataStore(
-            name = "address_wallet"
-        )
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        (viewModel.readCounter(dataStore))
-        viewModel.address.observe(this) {
-            if (!it.isNullOrEmpty()) {
-                val intent = Intent(this, WalletActivity::class.java)
-                startActivity(intent)
-            }
+        val shar = SecSharPref()
+        shar.setContext(applicationContext)
+        if (shar.getAddress().isNotEmpty()){
+            val intent = Intent(this, WalletActivity::class.java)
+            intent.flags =
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         progressView = findViewById(R.id.progress_view)
 
         createWalletButton = findViewById(R.id.create_wallet_button)
@@ -57,23 +53,24 @@ class MainActivity : AppCompatActivity() {
             progressView.visibility = View.VISIBLE
             progressView.startAnimation()
             lifecycleScope.launch {
-                createWallet(dataStore, applicationContext)
+                createWallet(applicationContext)
             }
         }
         viewModel.response.observe(this) {
             val intent = Intent(this, WalletActivity::class.java)
+            intent.flags =
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             progressView.stopAnimation()
             progressView.visibility = View.GONE
             startActivity(intent)
         }
     }
 
-    suspend fun createWallet(dataStore: DataStore<Preferences>, context: Context) {
+    suspend fun createWallet(context: Context) {
         val body = RetrofitClientInstance.instance.postNewWallet()
         if (body.isSuccessful) {
             body.body()?.let {
                 sh(context, it)
-                viewModel.setResponse(it, dataStore)
             }
         } else {
             withContext(Dispatchers.Main) {
@@ -85,6 +82,6 @@ class MainActivity : AppCompatActivity() {
     fun sh(context: Context, result: Result.Success) {
         val shar = SecSharPref()
         shar.setContext(context)
-        shar.putPrivateKeyAndAddress(result.privateKey, result.address)
+        shar.putPrivateKeyAndAddress(result.privateKey, result.address, result.mnemonic)
     }
 }

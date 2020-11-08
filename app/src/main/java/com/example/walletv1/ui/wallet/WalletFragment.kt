@@ -1,6 +1,5 @@
 package com.example.walletv1.ui.wallet
 
-import android.app.Fragment.instantiate
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -12,8 +11,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.createDataStore
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.Fragment.instantiate
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +25,7 @@ class WalletFragment : Fragment() {
     private lateinit var sendButton: Button
     private lateinit var receiveButton: Button
     private lateinit var amountText: TextView
+    private lateinit var amountUSDText: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,18 +67,26 @@ class WalletFragment : Fragment() {
             }
         }
         amountText = root.findViewById(R.id.balance_text)
-
-        //walletViewModel.getBalanceFromServer()
+        amountUSDText = root.findViewById(R.id.balance_usd_text)
+        //walletViewModel.getBalanceFromServer(context!!)
         walletViewModel.amount.observe(viewLifecycleOwner) {
             amountText.text = "${it.amountBGL}  BGL"
+            amountUSDText.text = "${it.amountUSD} $"
         }
         historyRecycler = root.findViewById(R.id.history_recycler)
         with(historyRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = walletViewModel.adapterRecyclerView
         }
-        walletViewModel.getHistoryFromServer(context!!)
+        //walletViewModel.getHistoryFromServer(context!!)
 
         return root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        walletViewModel.getBalanceFromServer(context!!)
+        walletViewModel.getHistoryFromServer(context!!)
+
     }
 }

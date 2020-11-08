@@ -21,6 +21,7 @@ class HistoryAdapterRecyclerView(val items: MutableList<HistoryItemModel> = muta
     }
 
     fun addItems(newItems: List<HistoryItemModel>) {
+        clearData()
         items.addAll(newItems)
         notifyDataSetChanged()
     }
@@ -41,10 +42,10 @@ class HistoryAdapterRecyclerView(val items: MutableList<HistoryItemModel> = muta
     private fun getDateString(time: Int): String = simpleDateFormat.format(time * 1000L)
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.category.text = items[position].category
-        if (items[position].category != "Receive")
+        if (items[position].category != "receive") {
+            holder.category.text = "Send"
             holder.iconCategoryView.setImageResource(R.drawable.ic_send_icon_item)
-
+        }
         holder.amountView.text = "${items[position].amount} BGL"
         try {
             holder.dateView.text = getDateString(items[position].time)

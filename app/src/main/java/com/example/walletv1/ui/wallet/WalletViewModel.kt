@@ -24,11 +24,6 @@ import kotlinx.coroutines.withContext
 
 class WalletViewModel() : ViewModel() {
 
-    init {
-        //readCounter(dataStore = dataStore)
-        getBalanceFromServer()
-    }
-
     private lateinit var address : String
 
     val ADDRESS_WALLET = preferencesKey<String>("address_wallet")
@@ -53,9 +48,11 @@ class WalletViewModel() : ViewModel() {
             HistoryItemModel(-14.0, "Send", 4, 453, 344, "dgdfjnjjjnjnjnjnjnbhbhbhbhhjhvgvgvhhgghgjgghghgggkf")
         )*/)
 
-    private fun getBalanceFromServer() {
+    fun getBalanceFromServer(context:Context) {
         viewModelScope.launch {
-            val response = RetrofitClientInstance.instance.getBalance(MainViewModel.getAddress())
+            val secSharPref = SecSharPref()
+            secSharPref.setContext(context)
+            val response = RetrofitClientInstance.instance.getBalance(secSharPref.getAddress())
             if (response.isSuccessful) {
                 _amount.value = response.body()
             }

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.walletv1.MainViewModel
 import com.example.walletv1.R
+import com.example.walletv1.utils.SecSharPref
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 
@@ -37,7 +38,9 @@ class ReceiveDialogFragment : DialogFragment() {
         customView.clipToOutline = true
         val address = customView.findViewById<Button>(R.id.address_dialog)
         val exitButton = customView.findViewById<Button>(R.id.exit)
-        address.text = MainViewModel.getAddress()
+        val sha = SecSharPref()
+        sha.setContext(requireContext())
+        address.text = sha.getAddress()
 
         val imageQRCode = customView.findViewById<ImageView>(R.id.image_qr_code)
         val writer = QRCodeWriter()
