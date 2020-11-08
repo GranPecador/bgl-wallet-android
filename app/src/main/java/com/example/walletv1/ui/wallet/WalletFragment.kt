@@ -1,7 +1,7 @@
 package com.example.walletv1.ui.wallet
 
+import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.walletv1.R
-import com.example.walletv1.net.RetrofitClientInstance
 
 class WalletFragment : Fragment() {
 
@@ -32,10 +32,25 @@ class WalletFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val root = inflater.inflate(R.layout.fragment_wallet, container, false)
         walletViewModel =
             ViewModelProvider(this).get(WalletViewModel::class.java)
+
+        val root = inflater.inflate(R.layout.fragment_wallet, container, false)
+
+        val swipeRefreshLayout = root.findViewById<SwipeRefreshLayout>(R.id.wallet_refresh)
+        swipeRefreshLayout.setOnRefreshListener {
+            walletViewModel.getBalanceFromServer(context!!)
+            walletViewModel.getHistoryFromServer(context!!)
+            swipeRefreshLayout.isRefreshing = false
+        }
+        swipeRefreshLayout.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
+
+
         val dataStore = root.context.createDataStore(name = "address_wallet")
         walletViewModel.readCounter(dataStore)
 
@@ -77,6 +92,7 @@ class WalletFragment : Fragment() {
         with(historyRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = walletViewModel.adapterRecyclerView
+            isNestedScrollingEnabled = false
         }
         //walletViewModel.getHistoryFromServer(context!!)
 
