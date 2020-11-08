@@ -1,15 +1,15 @@
 package com.example.walletv1.net
 
-import com.example.walletv1.model.AmountWalletModel
-import com.example.walletv1.model.HistoryItemModel
-import com.example.walletv1.model.TransactionModel
-import com.example.walletv1.model.TransactionResponse
+import com.example.walletv1.model.*
 import retrofit2.Response
 import retrofit2.http.*
 
 interface JSONPlaceHolderApi {
     @POST("/wallet")
     suspend fun postNewWallet(): Response<Result.Success>
+
+    @PUT("/wallet")
+    suspend fun importWallet(@Body importWallet: ImportModel): Response<Result.Success>
 
     @GET("/balance/{address}")
     suspend fun getBalance(@Path("address") address: String): Response<AmountWalletModel>
@@ -21,5 +21,5 @@ interface JSONPlaceHolderApi {
     ): Response<List<HistoryItemModel>>
 
     @POST("/transaction")
-    suspend fun createTransaction(@Body transaction:TransactionModel): Response<TransactionResponse>
+    suspend fun createTransaction(@Body transaction: TransactionModel): Response<TransactionResponse>
 }

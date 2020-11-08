@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.example.walletv1.model.ImportModel
 import com.example.walletv1.net.Result
 import com.example.walletv1.net.RetrofitClientInstance
 import com.example.walletv1.utils.GetMKey
@@ -25,18 +26,20 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 import com.github.rahatarmanahmed.cpv.CircularProgressView
+import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var createWalletButton: Button
+    lateinit var importWalletButton: Button
     private lateinit var progressView: CircularProgressView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Create the DataStore with Preferences DataStore
         val shar = SecSharPref()
         shar.setContext(applicationContext)
-        if (shar.getAddress().isNotEmpty()){
+        if (shar.getAddress().isNotEmpty()) {
             val intent = Intent(this, WalletActivity::class.java)
             intent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -47,12 +50,56 @@ class MainActivity : AppCompatActivity() {
         progressView = findViewById(R.id.progress_view)
 
         createWalletButton = findViewById(R.id.create_wallet_button)
+        importWalletButton = findViewById(R.id.import_wallet)
         createWalletButton.setBackgroundColor(
             ContextCompat.getColor(
                 this,
                 R.color.colorButAndItemWalletAtiva
             )
         )
+        importWalletButton.setBackgroundColor(
+            ContextCompat.getColor(
+                this,
+                R.color.colorButAndItemWalletAtiva
+            )
+        )
+        importWalletButton.setOnClickListener {
+            val path = this.getExternalFilesDir(null)
+            Log.e("TAG --------------", path.toString())
+            val shar = SecSharPref()
+            shar.setContext(applicationContext)
+            val file = File(path.toString() + "/BGL_Backup", "24words_backup.txt")
+            var mnemonic = file.readText()
+            shar.putMnemonic(mnemonic)
+            lifecycleScope.launch() {
+                val res = RetrofitClientInstance.instance.importWallet(ImportModel(mnemonic))
+                if (res.isSuccessful) {
+                    res.body()?.let { it1 ->
+                        {
+                            val shar = SecSharPref()
+                            shar.setContext(applicationContext)
+                            shar.putPrivateKeyAndAddress(
+                                it1.privateKey,
+                                it1.address,
+                                it1.mnemonic
+                            )
+                        }
+                    }
+                }
+            }
+            //Toast.makeText(this, "Backup is success to ", Toast.LENGTH_SHORT).show()
+            val dialogFragment =
+                SettingsActivity.MessageDialogFragment("Backup restored: " + path.toString())
+            dialogFragment.show(
+                supportFragmentManager,
+                "MessageDialogFragment"
+            )
+            val intent = Intent(applicationContext, WalletActivity::class.java)
+            intent.flags =
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
         createWalletButton.setOnClickListener {
             createWalletButton.isEnabled = false
             progressView.visibility = View.VISIBLE
@@ -75,7 +122,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "${body.code()}", Toast.LENGTH_LONG).show()
             }
         }
-
     }
 
     fun sh(context: Context, result: Result.Success) {

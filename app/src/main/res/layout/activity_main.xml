@@ -51,17 +51,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+    <Button
+        android:id="@+id/import_wallet"
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="10dp"
+        android:text="Import existing wallet"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        app:icon="@drawable/ic_wallet"
+        app:iconTint="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_wallet_button" />
+
     <com.github.rahatarmanahmed.cpv.CircularProgressView
         android:id="@+id/progress_view"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginTop="15dp"
         android:visibility="invisible"
         app:cpv_animAutostart="false"
         app:cpv_indeterminate="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_wallet_button" />
+        app:layout_constraintTop_toBottomOf="@+id/import_wallet" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,5 @@
 package com.example.walletv1.ui.wallet
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -103,6 +102,5 @@ class WalletFragment : Fragment() {
         super.onStart()
         walletViewModel.getBalanceFromServer(context!!)
         walletViewModel.getHistoryFromServer(context!!)
-
     }
 }

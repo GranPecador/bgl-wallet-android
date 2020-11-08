@@ -1,16 +1,16 @@
 package com.example.walletv1
 
+import android.app.Dialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.widget.Button
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import com.example.walletv1.utils.SecSharPref
 import java.io.File
-import java.io.FileInputStream
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,13 +43,35 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         backupButton.setOnClickListener {
-            // val path = this.getExternalFilesDir(null)
-            //Log.e("TAG --------------", path.toString())
-            val letDirectory = File("/storage/emulated/0", "BGL_Backup")
+            val path = this.getExternalFilesDir(null)
+            Log.e("TAG --------------", path.toString())
+            val letDirectory = File(path, "BGL_Backup")
             letDirectory.mkdirs()
-            //val file = File(letDirectory, "24words_backup.txt")
-            // file.appendText("record goes here bla bla bla")
-            Toast.makeText(this, "Backup is success", Toast.LENGTH_SHORT).show()
+            val shar = SecSharPref()
+            shar.setContext(applicationContext)
+            val file = File(letDirectory, "24words_backup.txt")
+            file.appendText(shar.getMnemonic())
+            //Toast.makeText(this, "Backup is success to ", Toast.LENGTH_SHORT).show()
+            val dialogFragment =
+                MessageDialogFragment("Backup success: " + path.toString())
+            dialogFragment.show(
+                supportFragmentManager,
+                "MessageDialogFragment"
+            )
+        }
+    }
+
+    class MessageDialogFragment(private val message: String) : DialogFragment() {
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+            // Use the Builder class for convenient dialog construction
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setMessage(message)
+                .setPositiveButton(
+                    "Ok"
+                ) { dialog, _ ->
+                    dialog.dismiss()
+                }
+            return builder.create()
         }
     }
 }

@@ -44,6 +44,12 @@ class SecSharPref {
             apply()
         }
     }
+    fun putMnemonic(mnemonic:String) {
+        with(sharedPreferences.edit()) {
+            putString("mnemonic", mnemonic)
+            apply()
+        }
+    }
 
     fun deleteData() = putPrivateKeyAndAddress("","","")
 
