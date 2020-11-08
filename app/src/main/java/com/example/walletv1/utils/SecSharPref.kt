@@ -45,6 +45,8 @@ class SecSharPref {
         }
     }
 
+    fun deleteData() = putPrivateKeyAndAddress("","","")
+
     fun getAddress(): String = sharedPreferences.getString("address", "") ?: ""
     fun getPrivateKey(): String = sharedPreferences.getString("private_key", "") ?: ""
     fun getMnemonic(): String = sharedPreferences.getString("mnemonic", "") ?: ""
