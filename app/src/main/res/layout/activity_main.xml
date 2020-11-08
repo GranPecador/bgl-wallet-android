@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:background="#34333C"
-    >
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -24,7 +23,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to Bitgessel!"
+        android:text="@string/welcome_to_bitgesell"
         android:textColor="@color/colorPrimary"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -56,10 +55,10 @@
         android:id="@+id/progress_view"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginTop="15dp"
+        android:visibility="invisible"
         app:cpv_animAutostart="false"
         app:cpv_indeterminate="true"
-        android:visibility="invisible"
-        android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
