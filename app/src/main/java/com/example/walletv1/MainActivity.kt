@@ -9,17 +9,10 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.datastore.DataStore
-import androidx.datastore.preferences.Preferences
-import androidx.datastore.preferences.createDataStore
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 import com.example.walletv1.model.ImportModel
 import com.example.walletv1.net.Result
 import com.example.walletv1.net.RetrofitClientInstance
-import com.example.walletv1.utils.GetMKey
 import com.example.walletv1.utils.SecSharPref
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -70,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             shar.setContext(applicationContext)
             try {
                 val file = File(path.toString() + "/BGL_Backup", "24words_backup.txt")
-                var mnemonic = file.readText()
+                val mnemonic = file.readText()
                 shar.putMnemonic(mnemonic)
                 lifecycleScope.launch() {
                     val res = RetrofitClientInstance.instance.importWallet(ImportModel(mnemonic))
@@ -128,8 +121,11 @@ class MainActivity : AppCompatActivity() {
                 sh(context, it)
             }
         } else {
+            createWalletButton.isEnabled = true
+            progressView.visibility = View.INVISIBLE
+            progressView.stopAnimation()
             withContext(Dispatchers.Main) {
-                Toast.makeText(applicationContext, "${body.code()}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity.applicationContext, "${body.code()}", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -139,7 +135,6 @@ class MainActivity : AppCompatActivity() {
         shar.setContext(context)
         shar.putPrivateKeyAndAddress(result.privateKey, result.address, result.mnemonic)
         val intent = Intent(this, MnemonicActivity::class.java)
-        //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         progressView.stopAnimation()
         progressView.visibility = View.GONE
         startActivity(intent)

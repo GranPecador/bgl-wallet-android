@@ -10,25 +10,25 @@ import com.example.walletv1.utils.SecSharPref
 
 class MnemonicActivity : AppCompatActivity() {
 
-    lateinit var continueButton : Button
+    lateinit var continueButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mnemonic)
-        title ="24 secret words"
+        title = "24 secret words"
 
         val shar = SecSharPref()
         shar.setContext(applicationContext)
-        val first :TextView= findViewById(R.id.first_column_mnemonic_words)
-        val second :TextView= findViewById(R.id.second_column_mnemonic_words)
+        val first: TextView = findViewById(R.id.first_column_mnemonic_words)
+        val second: TextView = findViewById(R.id.second_column_mnemonic_words)
         val list = shar.getMnemonic().split(" ")
-        var i =0
+        var i = 0
         val partList = ArrayList<String>()
-        while (i<24){
-            partList.add("${i+1}.  ${list[i++]}\n")
+        while (i < 24) {
+            partList.add("${i + 1}.  ${list[i++]}\n")
         }
-        first.text = partList.take(12).joinToString (separator  = "" )
-        second.text = partList.takeLast(12).joinToString (separator  = "" )
+        first.text = partList.take(12).joinToString(separator = "")
+        second.text = partList.takeLast(12).joinToString(separator = "")
         continueButton = findViewById(R.id.continue_button)
         continueButton.setBackgroundColor(
             ContextCompat.getColor(

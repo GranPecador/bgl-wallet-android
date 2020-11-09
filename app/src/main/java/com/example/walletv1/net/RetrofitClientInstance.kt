@@ -14,7 +14,7 @@ object RetrofitClientInstance {
 
     private val client = OkHttpClient.Builder()
 
-    val instance: JSONPlaceHolderApi by lazy {
+    val instance : JSONPlaceHolderApi by lazy {
 
         logging.level = HttpLoggingInterceptor.Level.BODY
         client.addInterceptor(logging)
