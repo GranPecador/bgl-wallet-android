@@ -9,10 +9,17 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.datastore.DataStore
+import androidx.datastore.preferences.Preferences
+import androidx.datastore.preferences.createDataStore
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import com.example.walletv1.model.ImportModel
 import com.example.walletv1.net.Result
 import com.example.walletv1.net.RetrofitClientInstance
+import com.example.walletv1.utils.GetMKey
 import com.example.walletv1.utils.SecSharPref
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,12 +39,12 @@ class MainActivity : AppCompatActivity() {
         //Create the DataStore with Preferences DataStore
         val shar = SecSharPref()
         shar.setContext(applicationContext)
-        //if (shar.getAddress().isNotEmpty()) {
+        if (shar.getAddress().isNotEmpty()) {
             val intent = Intent(this, WalletActivity::class.java)
             intent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-        //}
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         progressView = findViewById(R.id.progress_view)
@@ -58,35 +65,45 @@ class MainActivity : AppCompatActivity() {
         )
         importWalletButton.setOnClickListener {
             val path = this.getExternalFilesDir(null)
-            Log.e("TAG --------------", path.toString())
+            Log.i("TAG --------------", path.toString())
             val shar = SecSharPref()
             shar.setContext(applicationContext)
-            val file = File(path.toString() + "/BGL_Backup", "24words_backup.txt")
-            val mnemonic = file.readText()
-            shar.putMnemonic(file.readText())
-            lifecycleScope.launch() {
-                val res = RetrofitClientInstance.instance.importWallet(ImportModel(mnemonic))
-                if (res.isSuccessful) {
-                    res.body()?.let { it1 ->
-                        {
-                            val shar = SecSharPref()
-                            shar.setContext(applicationContext)
-                            shar.putPrivateKeyAndAddress(
-                                it1.privateKey,
-                                it1.address,
-                                it1.mnemonic
-                            )
+            try {
+                val file = File(path.toString() + "/BGL_Backup", "24words_backup.txt")
+                var mnemonic = file.readText()
+                shar.putMnemonic(mnemonic)
+                lifecycleScope.launch() {
+                    val res = RetrofitClientInstance.instance.importWallet(ImportModel(mnemonic))
+                    if (res.isSuccessful) {
+                        res.body()?.let { it1 ->
+                            {
+                                val shar = SecSharPref()
+                                shar.setContext(applicationContext)
+                                shar.putPrivateKeyAndAddress(
+                                    it1.privateKey,
+                                    it1.address,
+                                    it1.mnemonic
+                                )
+                            }
                         }
                     }
                 }
+                //Toast.makeText(this, "Backup is success to ", Toast.LENGTH_SHORT).show()
+                val dialogFragment =
+                    SettingsActivity.MessageDialogFragment("Backup restored: " + path.toString())
+                dialogFragment.show(
+                    supportFragmentManager,
+                    "MessageDialogFragment"
+                )
+            } catch (e: Exception) {
+                //Toast.makeText(this, "Backup is success to ", Toast.LENGTH_SHORT).show()
+                val dialogFragment =
+                    SettingsActivity.MessageDialogFragment("Can't import: " + path.toString())
+                dialogFragment.show(
+                    supportFragmentManager,
+                    "MessageDialogFragment"
+                )
             }
-            //Toast.makeText(this, "Backup is success to ", Toast.LENGTH_SHORT).show()
-            val dialogFragment =
-                SettingsActivity.MessageDialogFragment("Backup restored: " + path.toString())
-            dialogFragment.show(
-                supportFragmentManager,
-                "MessageDialogFragment"
-            )
             val intent = Intent(applicationContext, WalletActivity::class.java)
             intent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -111,9 +128,6 @@ class MainActivity : AppCompatActivity() {
                 sh(context, it)
             }
         } else {
-            createWalletButton.isEnabled = true
-            progressView.visibility = View.INVISIBLE
-            progressView.stopAnimation()
             withContext(Dispatchers.Main) {
                 Toast.makeText(applicationContext, "${body.code()}", Toast.LENGTH_LONG).show()
             }
@@ -125,6 +139,7 @@ class MainActivity : AppCompatActivity() {
         shar.setContext(context)
         shar.putPrivateKeyAndAddress(result.privateKey, result.address, result.mnemonic)
         val intent = Intent(this, MnemonicActivity::class.java)
+        //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         progressView.stopAnimation()
         progressView.visibility = View.GONE
         startActivity(intent)

@@ -7,13 +7,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClientInstance {
-    private const val BASE_URL = "https://5a25fa32d65a.ngrok.io"
+
+    private const val BASE_URL = " https://c81670bb7295.ngrok.io"
 
     private val logging = HttpLoggingInterceptor()
 
     private val client = OkHttpClient.Builder()
 
-    val instance : JSONPlaceHolderApi by lazy {
+    val instance: JSONPlaceHolderApi by lazy {
 
         logging.level = HttpLoggingInterceptor.Level.BODY
         client.addInterceptor(logging)

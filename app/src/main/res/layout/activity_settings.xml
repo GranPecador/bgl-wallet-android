@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity"
-    android:background="@color/windowBackground">
+    android:background="@color/windowBackground"
+    tools:context=".SettingsActivity">
 
     <Button
         android:id="@+id/backup"
-        android:layout_width="296dp"
-        android:layout_height="50dp"
+        android:layout_width="300dp"
+        android:layout_height="65dp"
         android:text="Backup"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"
@@ -23,8 +23,8 @@
 
     <Button
         android:id="@+id/delete_wallet"
-        android:layout_width="296dp"
-        android:layout_height="50dp"
+        android:layout_width="300dp"
+        android:layout_height="65dp"
         android:text="Delete wallet"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
@@ -35,4 +35,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="created by origin dev"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
