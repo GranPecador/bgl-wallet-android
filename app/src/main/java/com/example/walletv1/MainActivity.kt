@@ -65,35 +65,45 @@ class MainActivity : AppCompatActivity() {
         )
         importWalletButton.setOnClickListener {
             val path = this.getExternalFilesDir(null)
-            Log.e("TAG --------------", path.toString())
+            Log.i("TAG --------------", path.toString())
             val shar = SecSharPref()
             shar.setContext(applicationContext)
-            val file = File(path.toString() + "/BGL_Backup", "24words_backup.txt")
-            var mnemonic = file.readText()
-            shar.putMnemonic(mnemonic)
-            lifecycleScope.launch() {
-                val res = RetrofitClientInstance.instance.importWallet(ImportModel(mnemonic))
-                if (res.isSuccessful) {
-                    res.body()?.let { it1 ->
-                        {
-                            val shar = SecSharPref()
-                            shar.setContext(applicationContext)
-                            shar.putPrivateKeyAndAddress(
-                                it1.privateKey,
-                                it1.address,
-                                it1.mnemonic
-                            )
+            try {
+                val file = File(path.toString() + "/BGL_Backup", "24words_backup.txt")
+                var mnemonic = file.readText()
+                shar.putMnemonic(mnemonic)
+                lifecycleScope.launch() {
+                    val res = RetrofitClientInstance.instance.importWallet(ImportModel(mnemonic))
+                    if (res.isSuccessful) {
+                        res.body()?.let { it1 ->
+                            {
+                                val shar = SecSharPref()
+                                shar.setContext(applicationContext)
+                                shar.putPrivateKeyAndAddress(
+                                    it1.privateKey,
+                                    it1.address,
+                                    it1.mnemonic
+                                )
+                            }
                         }
                     }
                 }
+                //Toast.makeText(this, "Backup is success to ", Toast.LENGTH_SHORT).show()
+                val dialogFragment =
+                    SettingsActivity.MessageDialogFragment("Backup restored: " + path.toString())
+                dialogFragment.show(
+                    supportFragmentManager,
+                    "MessageDialogFragment"
+                )
+            } catch (e: Exception) {
+                //Toast.makeText(this, "Backup is success to ", Toast.LENGTH_SHORT).show()
+                val dialogFragment =
+                    SettingsActivity.MessageDialogFragment("Can't import: " + path.toString())
+                dialogFragment.show(
+                    supportFragmentManager,
+                    "MessageDialogFragment"
+                )
             }
-            //Toast.makeText(this, "Backup is success to ", Toast.LENGTH_SHORT).show()
-            val dialogFragment =
-                SettingsActivity.MessageDialogFragment("Backup restored: " + path.toString())
-            dialogFragment.show(
-                supportFragmentManager,
-                "MessageDialogFragment"
-            )
             val intent = Intent(applicationContext, WalletActivity::class.java)
             intent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

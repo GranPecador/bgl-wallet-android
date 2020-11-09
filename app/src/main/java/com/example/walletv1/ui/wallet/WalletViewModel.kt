@@ -22,11 +22,12 @@ import kotlinx.coroutines.withContext
 
 class WalletViewModel() : ViewModel() {
 
-    private lateinit var address : String
+    private lateinit var address: String
 
     val ADDRESS_WALLET = preferencesKey<String>("address_wallet")
+
     // Read data from DataStore
-    fun readCounter(dataStore:DataStore<Preferences>) {
+    fun readCounter(dataStore: DataStore<Preferences>) {
         viewModelScope.launch {
             val myCounterFlow: Flow<String> = dataStore.data
                 .map { currentPreferences ->
@@ -38,15 +39,17 @@ class WalletViewModel() : ViewModel() {
     }
 
     private val _amount: MutableLiveData<AmountWalletModel> = MutableLiveData()
-    val amount :LiveData<AmountWalletModel> = _amount
+    val amount: LiveData<AmountWalletModel> = _amount
 
     val adapterRecyclerView = HistoryAdapterRecyclerView(
-      /*  mutableListOf(
-            HistoryItemModel(1.0, "Receive", 4, 452342342, 344, "dgdff"),
-            HistoryItemModel(-14.0, "Send", 4, 453, 344, "dgdfjnjjjnjnjnjnjnbhbhbhbhhjhvgvgvhhgghgjgghghgggkf")
-        )*/)
+        // history example UI
+        /*  mutableListOf(
+              HistoryItemModel(1.0, "Receive", 4, 452342342, 344, "dgdff"),
+              HistoryItemModel(-14.0, "Send", 4, 453, 344, "dgdfjnjjjnjnjnjnjnbhbhbhbhhjhvgvgvhhgghgjgghghgggkf")
+          )*/
+    )
 
-    fun getBalanceFromServer(context:Context) {
+    fun getBalanceFromServer(context: Context) {
         viewModelScope.launch {
             val secSharPref = SecSharPref()
             secSharPref.setContext(context)
@@ -57,13 +60,13 @@ class WalletViewModel() : ViewModel() {
         }
     }
 
-    fun getHistoryFromServer(context:Context) {
+    fun getHistoryFromServer(context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
             val secSharPref = SecSharPref()
             secSharPref.setContext(context)
             val response = RetrofitClientInstance.instance.getHistory("0", secSharPref.getAddress())
             if (response.isSuccessful) {
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     response.body()?.let { adapterRecyclerView.addItems(it) }
                 }
             }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Message
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -59,7 +60,7 @@ class SendActivity : AppCompatActivity() {
 
             lifecycleScope.launch {
                 val response = RetrofitClientInstance.instance.createTransaction(transactionModel)
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     val dialogFragment = MessageDialogFragment("Send successful.")
                     dialogFragment.show(
                         supportFragmentManager,
