@@ -131,7 +131,11 @@
         android:hint="1a3d49ebc3c7f264ce5f9bc756cb33bee0b51bad4c9180768f9d113cec2b30e9"
         android:textColor="@color/colorTextHistoryItem"
         android:textSize="12sp"
+android:textColorHighlight="@color/colorPrimary"
+        android:enabled="true"
         android:textIsSelectable="true"
+        android:focusable="true"
+        android:longClickable="true"
         app:layout_constraintEnd_toEndOf="@+id/amount_history_item_text"
         app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/confirmations_history_item_text" />
