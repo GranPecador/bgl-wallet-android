@@ -46,8 +46,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
 
-    // Preferences DataStore
-    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha02"
     implementation "androidx.security:security-crypto:1.1.0-alpha02"
 
     // Progress bar

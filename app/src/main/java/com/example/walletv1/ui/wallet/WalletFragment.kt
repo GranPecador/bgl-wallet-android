@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.datastore.preferences.createDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,10 +47,6 @@ class WalletFragment : Fragment() {
             android.R.color.holo_orange_light,
             android.R.color.holo_red_light
         )
-
-
-        val dataStore = root.context.createDataStore(name = "address_wallet")
-        walletViewModel.readCounter(dataStore)
 
         sendButton = root.findViewById(R.id.send_button)
         sendButton.setBackgroundColor(

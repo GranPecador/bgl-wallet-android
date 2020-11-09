@@ -13,15 +13,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Walletv1">
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".MnemonicActivity" />
-        <activity android:name=".ui.wallet.SendActivity" />
+        <activity android:name=".SettingsActivity"
+            android:screenOrientation = "portrait" />
+        <activity android:name=".MnemonicActivity"
+            android:screenOrientation = "portrait" />
+        <activity android:name=".ui.wallet.SendActivity"
+            android:screenOrientation = "portrait" />
         <activity
             android:name=".WalletActivity"
-            android:label="@string/title_activity_wallet" />
+            android:label="@string/title_activity_wallet"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.Walletv1">
+            android:theme="@style/Theme.Walletv1"
+            android:screenOrientation = "portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
