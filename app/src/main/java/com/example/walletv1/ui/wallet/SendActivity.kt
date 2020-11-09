@@ -85,10 +85,10 @@ class MessageDialogFragment(val message: String) : DialogFragment() {
         // Use the Builder class for convenient dialog construction
         val builder = Builder(requireContext())
         builder.setMessage(message)
-            .setPositiveButton("Ok",
-                DialogInterface.OnClickListener { dialog, _ ->
-                    dialog.dismiss()
-                })
+            .setNeutralButton("Ok"
+            ) { dialog, _ ->
+                dialog.dismiss()
+            }
         view?.setBackgroundColor(resources.getColor(R.color.windowBackground))
         return builder.create()
     }

@@ -3,7 +3,6 @@ package com.example.walletv1
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -11,7 +10,7 @@ import com.example.walletv1.utils.SecSharPref
 
 class MnemonicActivity : AppCompatActivity() {
 
-    lateinit var continurButton : Button
+    lateinit var continueButton : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,14 +29,14 @@ class MnemonicActivity : AppCompatActivity() {
         }
         first.text = partList.take(12).joinToString (separator  = "" )
         second.text = partList.takeLast(12).joinToString (separator  = "" )
-        continurButton = findViewById(R.id.continue_button)
-        continurButton.setBackgroundColor(
+        continueButton = findViewById(R.id.continue_button)
+        continueButton.setBackgroundColor(
             ContextCompat.getColor(
                 this,
                 R.color.colorButAndItemWalletAtiva
             )
         )
-        continurButton.setOnClickListener {
+        continueButton.setOnClickListener {
             val intent = Intent(this, WalletActivity::class.java)
             intent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

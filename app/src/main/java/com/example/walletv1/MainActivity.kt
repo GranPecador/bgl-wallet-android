@@ -32,12 +32,12 @@ class MainActivity : AppCompatActivity() {
         //Create the DataStore with Preferences DataStore
         val shar = SecSharPref()
         shar.setContext(applicationContext)
-        if (shar.getAddress().isNotEmpty()) {
+        //if (shar.getAddress().isNotEmpty()) {
             val intent = Intent(this, WalletActivity::class.java)
             intent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-        }
+        //}
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         progressView = findViewById(R.id.progress_view)
@@ -62,8 +62,8 @@ class MainActivity : AppCompatActivity() {
             val shar = SecSharPref()
             shar.setContext(applicationContext)
             val file = File(path.toString() + "/BGL_Backup", "24words_backup.txt")
-            var mnemonic = file.readText()
-            shar.putMnemonic(mnemonic)
+            val mnemonic = file.readText()
+            shar.putMnemonic(file.readText())
             lifecycleScope.launch() {
                 val res = RetrofitClientInstance.instance.importWallet(ImportModel(mnemonic))
                 if (res.isSuccessful) {
@@ -111,6 +111,9 @@ class MainActivity : AppCompatActivity() {
                 sh(context, it)
             }
         } else {
+            createWalletButton.isEnabled = true
+            progressView.visibility = View.INVISIBLE
+            progressView.stopAnimation()
             withContext(Dispatchers.Main) {
                 Toast.makeText(applicationContext, "${body.code()}", Toast.LENGTH_LONG).show()
             }
@@ -122,7 +125,6 @@ class MainActivity : AppCompatActivity() {
         shar.setContext(context)
         shar.putPrivateKeyAndAddress(result.privateKey, result.address, result.mnemonic)
         val intent = Intent(this, MnemonicActivity::class.java)
-        //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         progressView.stopAnimation()
         progressView.visibility = View.GONE
         startActivity(intent)

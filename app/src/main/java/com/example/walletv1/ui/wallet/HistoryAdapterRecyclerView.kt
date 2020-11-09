@@ -55,6 +55,7 @@ class HistoryAdapterRecyclerView(val items: MutableList<HistoryItemModel> = muta
         holder.feeView.text = "${items[position].fee}"
         holder.confirmationsView.text = "${items[position].confirmations}"
         holder.txIdView.text = items[position].txid
+        holder.txIdView.setTextIsSelectable(true)
         holder.itemView.setOnClickListener {
             holder.group.visibility =
                 if (holder.group.visibility == View.VISIBLE) View.GONE else View.VISIBLE
