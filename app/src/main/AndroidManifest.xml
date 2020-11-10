@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.walletv1">
+    package="com.origindev.bglwallet">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -13,18 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Walletv1">
-        <activity android:name=".SettingsActivity"
+        <activity android:name="com.origindev.bglwallet.SettingsActivity"
             android:screenOrientation = "portrait" />
-        <activity android:name=".MnemonicActivity"
+        <activity android:name="com.origindev.bglwallet.MnemonicActivity"
             android:screenOrientation = "portrait" />
-        <activity android:name=".ui.wallet.SendActivity"
+        <activity android:name="com.origindev.bglwallet.ui.wallet.SendActivity"
             android:screenOrientation = "portrait" />
         <activity
-            android:name=".WalletActivity"
+            android:name="com.origindev.bglwallet.WalletActivity"
             android:label="@string/title_activity_wallet"
             android:screenOrientation = "portrait"/>
         <activity
-            android:name=".MainActivity"
+            android:name="com.origindev.bglwallet.MainActivity"
             android:theme="@style/Theme.Walletv1"
             android:screenOrientation = "portrait">
             <intent-filter>
