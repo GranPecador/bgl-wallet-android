@@ -58,18 +58,31 @@
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="fee_history_item_text,textView9,
-                                        confirmations_history_item_text, textView10,txid_history_item_text,textView8"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="visible"
+        app:constraint_referenced_ids="textView9,
+                                        confirmations_history_item_text, textView10,txid_history_item_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/fee_history_item_text" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/fee_group_history_item"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="visible"
+        app:constraint_referenced_ids="fee_history_text_view,fee_history_item_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fee_history_item_text" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/fee_history_text_view"
         android:layout_width="100dp"
         android:layout_height="16dp"
         android:layout_marginStart="48dp"
@@ -78,65 +91,71 @@
         android:textColor="@color/colorPrimary"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_history_item_text" />
+        app:layout_constraintTop_toBottomOf="@id/date_history_item_text" />
 
 
     <TextView
         android:id="@+id/fee_history_item_text"
         android:layout_width="0dp"
         android:layout_height="16dp"
-        android:hint="0.321 BGL"
+        android:layout_marginEnd="16dp"
+        android:paddingStart="2dp"
         android:textColor="@color/colorTextHistoryItem"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/amount_history_item_text"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toTopOf="@+id/textView8" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fee_history_text_view"
+        app:layout_constraintTop_toTopOf="@+id/fee_history_text_view" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="100dp"
         android:layout_height="16dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
         android:text="Confirmations"
         android:textColor="@color/colorPrimary"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fee_history_text_view" />
 
     <TextView
         android:id="@+id/confirmations_history_item_text"
         android:layout_width="0dp"
         android:layout_height="16dp"
-        android:hint="5"
+        android:layout_marginEnd="16dp"
+        android:paddingStart="2dp"
         android:textColor="@color/colorTextHistoryItem"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/amount_history_item_text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/fee_history_item_text" />
+        app:layout_constraintTop_toTopOf="@+id/textView9" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="100dp"
         android:layout_height="16dp"
+        android:layout_marginStart="48dp"
         android:text="TxID: "
         android:textColor="@color/colorPrimary"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <TextView
         android:id="@+id/txid_history_item_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="1a3d49ebc3c7f264ce5f9bc756cb33bee0b51bad4c9180768f9d113cec2b30e9"
-        android:textColor="@color/colorTextHistoryItem"
-        android:textSize="12sp"
-android:textColorHighlight="@color/colorPrimary"
+        android:layout_marginEnd="16dp"
         android:enabled="true"
-        android:textIsSelectable="true"
         android:focusable="true"
         android:longClickable="true"
-        app:layout_constraintEnd_toEndOf="@+id/amount_history_item_text"
+        android:paddingStart="2dp"
+        android:textColor="@color/colorTextHistoryItem"
+        android:textColorHighlight="@color/colorPrimary"
+        android:textIsSelectable="true"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/confirmations_history_item_text" />
 

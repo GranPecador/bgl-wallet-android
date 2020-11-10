@@ -25,7 +25,7 @@
         android:id="@+id/delete_wallet"
         android:layout_width="300dp"
         android:layout_height="65dp"
-        android:text="Delete wallet"
+        android:text="Logout wallet"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"

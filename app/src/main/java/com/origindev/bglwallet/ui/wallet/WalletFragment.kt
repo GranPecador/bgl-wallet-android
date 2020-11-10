@@ -77,7 +77,6 @@ class WalletFragment : Fragment() {
         }
         amountText = root.findViewById(R.id.balance_text)
         amountUSDText = root.findViewById(R.id.balance_usd_text)
-        //walletViewModel.getBalanceFromServer(context!!)
         walletViewModel.amount.observe(viewLifecycleOwner) {
             amountText.text = "${it.amountBGL}  BGL"
             amountUSDText.text = "${it.amountUSD} $"
@@ -88,7 +87,6 @@ class WalletFragment : Fragment() {
             adapter = walletViewModel.adapterRecyclerView
             isNestedScrollingEnabled = false
         }
-        //walletViewModel.getHistoryFromServer(context!!)
 
         return root
     }

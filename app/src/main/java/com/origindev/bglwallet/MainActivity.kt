@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var progressView: CircularProgressView
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //Create the DataStore with Preferences DataStore
         val shar = SecSharPref()
         shar.setContext(applicationContext)
         if (shar.getAddress().isNotEmpty()) {

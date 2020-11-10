@@ -52,14 +52,24 @@ class HistoryAdapterRecyclerView(val items: MutableList<HistoryItemModel> = muta
         } catch (e: Exception) {
             Log.e("tag", e.toString())
         }
+        if (items[position].fee == 0.0) {
+            holder.feeGroup.visibility = View.GONE
+        }
         holder.feeView.text = "${items[position].fee}"
         holder.confirmationsView.text = "${items[position].confirmations}"
         holder.txIdView.text = items[position].txid
         holder.txIdView.setTextIsSelectable(true)
         holder.txIdView.isFocusable = true
         holder.itemView.setOnClickListener {
+            val visible = holder.group.visibility == View.VISIBLE
             holder.group.visibility =
-                if (holder.group.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                if (visible) View.GONE else View.VISIBLE
+            if (items[position].fee == 0.0) {
+                holder.feeGroup.visibility = View.GONE
+            } else {
+                holder.feeGroup.visibility =
+                    if (visible) View.GONE else View.VISIBLE
+            }
         }
     }
 
@@ -71,6 +81,7 @@ class HistoryAdapterRecyclerView(val items: MutableList<HistoryItemModel> = muta
             itemView.findViewById(R.id.icon_category_history_item_image)
         val amountView: TextView = itemView.findViewById(R.id.amount_history_item_text)
         val dateView: TextView = itemView.findViewById(R.id.date_history_item_text)
+        val feeGroup: Group = itemView.findViewById(R.id.fee_group_history_item)
         val feeView: TextView = itemView.findViewById(R.id.fee_history_item_text)
         val confirmationsView: TextView =
             itemView.findViewById(R.id.confirmations_history_item_text)
