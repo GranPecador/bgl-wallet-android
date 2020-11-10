@@ -21,14 +21,9 @@ class MnemonicActivity : AppCompatActivity() {
         shar.setContext(applicationContext)
         val first: TextView = findViewById(R.id.first_column_mnemonic_words)
         val second: TextView = findViewById(R.id.second_column_mnemonic_words)
-        val list = shar.getMnemonic().split(" ")
-        var i = 0
-        val partList = ArrayList<String>()
-        while (i < 24) {
-            partList.add("${i + 1}.  ${list[i++]}\n")
-        }
-        first.text = partList.take(12).joinToString(separator = "")
-        second.text = partList.takeLast(12).joinToString(separator = "")
+        val wordsGroups = shar.getMnemonic().convertToWordGroups()
+        first.text = wordsGroups.left
+        second.text = wordsGroups.right
         continueButton = findViewById(R.id.continue_button)
         continueButton.setBackgroundColor(
             ContextCompat.getColor(
@@ -44,3 +39,19 @@ class MnemonicActivity : AppCompatActivity() {
         }
     }
 }
+
+internal fun String.convertToWordGroups(): WordGroups {
+    val wordsWithIndex = this.split(" ").mapIndexed { index, s -> index to s }
+
+    fun convertToGroup(list: List<Pair<Int, String>>) = list.joinToString("\n") { (index, s) ->
+        "${index+1}. $s"
+    }
+
+    val leftGroupCount = wordsWithIndex.size / 2
+    return WordGroups(
+        convertToGroup(wordsWithIndex.take(leftGroupCount)),
+        convertToGroup(wordsWithIndex.drop(leftGroupCount))
+    )
+}
+
+data class WordGroups(val left: String, val right: String)
