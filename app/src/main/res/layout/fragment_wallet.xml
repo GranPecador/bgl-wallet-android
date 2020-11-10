@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#34333C"
-        tools:context=".ui.wallet.WalletFragment">
+        tools:context="com.origindev.bglwallet.ui.wallet.WalletFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
