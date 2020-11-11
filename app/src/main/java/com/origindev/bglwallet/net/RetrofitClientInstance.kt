@@ -1,5 +1,6 @@
 package com.origindev.bglwallet.net
 
+import com.origindev.bglwallet.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -7,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClientInstance {
 
-    private const val BASE_URL = "https://bgl-backend.herokuapp.com/"
+    private const val BASE_URL = BuildConfig.SERVER_URL
 
     private val logging = HttpLoggingInterceptor()
 

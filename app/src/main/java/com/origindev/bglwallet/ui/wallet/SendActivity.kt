@@ -3,19 +3,24 @@ package com.origindev.bglwallet.ui.wallet
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog.Builder
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
+import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
+import com.google.gson.TypeAdapter
 import com.origindev.bglwallet.R
 import com.origindev.bglwallet.model.TransactionModel
+import com.origindev.bglwallet.model.TransactionResponse
 import com.origindev.bglwallet.net.RetrofitClientInstance
 import com.origindev.bglwallet.utils.SecSharPref
-import com.google.android.material.textfield.TextInputEditText
-import androidx.appcompat.app.AlertDialog.Builder
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
+import java.io.IOException
 
 
 class SendActivity : AppCompatActivity() {
@@ -54,6 +59,9 @@ class SendActivity : AppCompatActivity() {
 
             lifecycleScope.launch {
                 val response = RetrofitClientInstance.instance.createTransaction(transactionModel)
+                Log.e("body", response.message())
+                Log.e("body", response.body().toString())
+
                 if (response.isSuccessful) {
                     val dialogFragment = MessageDialogFragment("Send successful.")
                     dialogFragment.show(
@@ -62,7 +70,21 @@ class SendActivity : AppCompatActivity() {
                     )
                     finish()
                 } else {
-                    val dialogFragment = MessageDialogFragment("Can't send transaction.")
+                    Log.d("response", "onResponse - Status : " + response.code())
+                    var transactionResponse = TransactionResponse("Can't sent transaction!")
+                    val gson = Gson()
+                    val adapter: TypeAdapter<TransactionResponse> =
+                        gson.getAdapter(TransactionResponse::class.java)
+                    try {
+                        if (response.errorBody() != null)
+                            transactionResponse = adapter.fromJson(
+                            response.errorBody()!!.string()
+                        )
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                    Log.e("response", transactionResponse.message)
+                    val dialogFragment = MessageDialogFragment(transactionResponse.message)
                     dialogFragment.show(
                         supportFragmentManager,
                         "MessageDialogFragment"
@@ -80,7 +102,8 @@ class MessageDialogFragment(val message: String) : DialogFragment() {
         // Use the Builder class for convenient dialog construction
         val builder = Builder(requireContext())
         builder.setMessage(message)
-            .setNeutralButton("Ok"
+            .setNeutralButton(
+                "Ok"
             ) { dialog, _ ->
                 dialog.dismiss()
             }
