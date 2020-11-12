@@ -13,6 +13,8 @@ import com.github.rahatarmanahmed.cpv.CircularProgressView
 import com.origindev.bglwallet.model.ImportModel
 import com.origindev.bglwallet.net.Result
 import com.origindev.bglwallet.net.RetrofitClientInstance
+import com.origindev.bglwallet.ui.wallet.dialogs.ReceiveDialogFragment
+import com.origindev.bglwallet.ui.wallet.dialogs.SelectImportDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,59 +45,11 @@ class MainActivity : AppCompatActivity() {
         importWalletButton = findViewById(R.id.import_wallet)
 
         importWalletButton.setOnClickListener {
-            val shar = SecSharPref()
-            shar.setContext(applicationContext)
-            try {
-                val path =
-                    this.getExternalFilesDir(null).toString() + "/BGL_Backup/24words_backup.txt"
-                val file = File(path)
-                if (!file.exists()) {
-                    val dialogFragment =
-                        SettingsActivity.MessageDialogFragment("Can't find file")
-                    dialogFragment.show(
-                        supportFragmentManager,
-                        "MessageDialogFragment"
-                    )
-                    return@setOnClickListener
-                }
-                val mnemonic = file.readText()
-                shar.putMnemonic(mnemonic)
-                lifecycleScope.launch() {
-                    val res = RetrofitClientInstance.instance.importWallet(ImportModel(mnemonic))
-                    if (res.isSuccessful) {
-                        res.body()?.let { it1 ->
-                            {
-                                val shar = SecSharPref()
-                                shar.setContext(applicationContext)
-                                shar.putPrivateKeyAndAddress(
-                                    it1.privateKey,
-                                    it1.address,
-                                    it1.mnemonic
-                                )
-                            }
-                        }
-                    }
-                }
-                //Toast.makeText(this, "Backup is success to ", Toast.LENGTH_SHORT).show()
-                val dialogFragment =
-                    SettingsActivity.MessageDialogFragment("Backup restored")
-                dialogFragment.show(
-                    supportFragmentManager,
-                    "MessageDialogFragment"
-                )
-                val intent = Intent(applicationContext, WalletActivity::class.java)
-                intent.flags =
-                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-
-            } catch (e: Exception) {
-                val dialogFragment =
-                    SettingsActivity.MessageDialogFragment("Can't import from")
-                dialogFragment.show(
-                    supportFragmentManager,
-                    "MessageDialogFragment"
-                )
-            }
+            val dialogFragment = SelectImportDialogFragment()
+            dialogFragment.show(
+                supportFragmentManager,
+                "SelectImportDialogFragment"
+            )
         }
 
         createWalletButton.setOnClickListener {
@@ -138,4 +92,6 @@ class MainActivity : AppCompatActivity() {
         progressView.visibility = View.GONE
         startActivity(intent)
     }
+
+
 }

@@ -1,4 +1,4 @@
-package com.origindev.bglwallet.ui.wallet
+package com.origindev.bglwallet.ui.wallet.dialogs
 
 import android.app.Dialog
 import android.content.ClipData
