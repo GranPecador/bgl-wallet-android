@@ -30,6 +30,27 @@
         <item name="iconTint">@color/colorPrimary</item>
     </style>
 
+    <style name="Theme.Walletv1.Dialog" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:windowBackground">@drawable/rounded_corners_32</item>
+        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:buttonBarNeutralButtonStyle">@style/NeutralButtonStyle</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="NeutralButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
     <style name="Theme.Walletv1.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

@@ -25,15 +25,6 @@ import com.google.zxing.qrcode.QRCodeWriter
 class ReceiveDialogFragment : DialogFragment() {
     lateinit var customView: View
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
-        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE);
-        return customView
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         customView = activity!!.layoutInflater.inflate(R.layout.receive_dialog_fragment, null)
@@ -67,7 +58,7 @@ class ReceiveDialogFragment : DialogFragment() {
         exitButton.setOnClickListener {
             this.dismiss()
         }
-        return AlertDialog.Builder(requireContext())
+        return AlertDialog.Builder(requireContext(), R.style.Theme_Walletv1_Dialog)
             .setView(customView)
 //            .setNegativeButton(android.R.string.cancel, null)
             .create()

@@ -23,18 +23,8 @@ import java.io.File
 
 class SelectImportDialogFragment : DialogFragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        dialog?.window?.setBackgroundDrawableResource(R.drawable.rounded_corners_32);
-        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE);
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(activity)
+        val builder = AlertDialog.Builder(activity, R.style.Theme_Walletv1_Dialog)
         builder.setMessage("Choose import method?")
             .setNeutralButton("From file"){ _, _ ->
                 fromFile(builder.context)

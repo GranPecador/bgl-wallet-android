@@ -7,19 +7,15 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.github.rahatarmanahmed.cpv.CircularProgressView
-import com.origindev.bglwallet.model.ImportModel
 import com.origindev.bglwallet.net.Result
 import com.origindev.bglwallet.net.RetrofitClientInstance
-import com.origindev.bglwallet.ui.wallet.dialogs.ReceiveDialogFragment
 import com.origindev.bglwallet.ui.wallet.dialogs.SelectImportDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
