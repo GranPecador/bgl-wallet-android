@@ -71,7 +71,7 @@ class SendActivity : AppCompatActivity() {
                     finish()
                 } else {
                     Log.d("response", "onResponse - Status : " + response.code())
-                    var transactionResponse = TransactionResponse("Can't sent transaction!")
+                    var transactionResponse = TransactionResponse("Can't sent transaction!","")
                     val gson = Gson()
                     val adapter: TypeAdapter<TransactionResponse> =
                         gson.getAdapter(TransactionResponse::class.java)
@@ -96,7 +96,8 @@ class SendActivity : AppCompatActivity() {
 
 }
 
-class MessageDialogFragment(val message: String) : DialogFragment() {
+class MessageDialogFragment(private val message: String) : DialogFragment() {
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Use the Builder class for convenient dialog construction

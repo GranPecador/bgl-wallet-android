@@ -5,10 +5,12 @@ import android.content.ClipData
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -27,7 +29,8 @@ class ReceiveDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Simply return the already inflated custom view
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE);
         return customView
     }
 

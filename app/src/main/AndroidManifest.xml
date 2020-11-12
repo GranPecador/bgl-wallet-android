@@ -13,26 +13,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Walletv1">
-        <activity android:name="com.origindev.bglwallet.SettingsActivity"
-            android:screenOrientation = "portrait" />
-        <activity android:name="com.origindev.bglwallet.MnemonicActivity"
-            android:screenOrientation = "portrait" />
-        <activity android:name="com.origindev.bglwallet.ui.wallet.SendActivity"
-            android:screenOrientation = "portrait" />
         <activity
-            android:name="com.origindev.bglwallet.WalletActivity"
+            android:name=".SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MnemonicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.wallet.SendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WalletActivity"
             android:label="@string/title_activity_wallet"
-            android:screenOrientation = "portrait"/>
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.origindev.bglwallet.MainActivity"
-            android:theme="@style/Theme.Walletv1"
-            android:screenOrientation = "portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Walletv1"><intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
     </application>
 
 </manifest>
