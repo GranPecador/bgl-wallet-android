@@ -19,19 +19,7 @@ class SettingsActivity : AppCompatActivity() {
         title = "Settings"
 
         val backupButton: Button = findViewById(R.id.backup)
-        backupButton.setBackgroundColor(
-            ContextCompat.getColor(
-                this,
-                R.color.colorButAndItemWalletAtiva
-            )
-        )
         val deleteButton: Button = findViewById(R.id.delete_wallet)
-        deleteButton.setBackgroundColor(
-            ContextCompat.getColor(
-                this,
-                R.color.colorButAndItemWalletAtiva
-            )
-        )
         deleteButton.setOnClickListener {
             val sha = SecSharPref()
             sha.setContext(context = applicationContext)

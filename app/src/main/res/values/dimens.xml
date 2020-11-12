@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="corner_radius">16dp</dimen>
     <dimen name="space_between_items_recycler">8dp</dimen>
+    <dimen name="wide_enter_mnemonic_word">130dp</dimen>
 </resources>

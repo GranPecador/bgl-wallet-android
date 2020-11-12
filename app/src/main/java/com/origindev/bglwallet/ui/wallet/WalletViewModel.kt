@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.origindev.bglwallet.model.AmountWalletModel
+import com.origindev.bglwallet.model.HistoryItemModel
 import com.origindev.bglwallet.net.RetrofitClientInstance
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.CoroutineScope
@@ -18,13 +19,7 @@ class WalletViewModel : ViewModel() {
     private val _amount: MutableLiveData<AmountWalletModel> = MutableLiveData()
     val amount: LiveData<AmountWalletModel> = _amount
 
-    val adapterRecyclerView = HistoryAdapterRecyclerView(
-        // history example UI
-        /*  mutableListOf(
-              HistoryItemModel(1.0, "Receive", 4, 452342342, 344, "dgdff"),
-              HistoryItemModel(-14.0, "Send", 4, 453, 344, "dgdfjnjjjnjnjnjnjnbhbhbhbhhjhvgvgvhhgghgjgghghgggkf")
-          )*/
-    )
+    val adapterRecyclerView = HistoryAdapterRecyclerView()
 
     fun getBalanceFromServer(context: Context) {
         viewModelScope.launch {

@@ -49,23 +49,11 @@ class WalletFragment : Fragment() {
         )
 
         sendButton = root.findViewById(R.id.send_button)
-        sendButton.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.colorButAndItemWalletAtiva
-            )
-        )
         sendButton.setOnClickListener {
             val intent = Intent(context, SendActivity::class.java)
             startActivity(intent)
         }
         receiveButton = root.findViewById(R.id.receive_button)
-        receiveButton.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.colorButAndItemWalletAtiva
-            )
-        )
         receiveButton.setOnClickListener {
             val dialogFragment = ReceiveDialogFragment()
             activity?.supportFragmentManager?.let { it1 ->

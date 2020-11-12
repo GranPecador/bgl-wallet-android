@@ -68,7 +68,7 @@ class SendActivity : AppCompatActivity() {
                         supportFragmentManager,
                         "MessageDialogFragment"
                     )
-                    finish()
+
                 } else {
                     Log.d("response", "onResponse - Status : " + response.code())
                     var transactionResponse = TransactionResponse("Can't sent transaction!","")

@@ -85,31 +85,25 @@
             />
 
         <Button
+            style="@style/Theme.Walletv1.Button"
             android:id="@+id/send_button"
             android:layout_width="155dp"
             android:layout_height="55dp"
             android:layout_marginTop="32dp"
             android:text="Send"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            app:cornerRadius="@dimen/corner_radius"
             app:icon="@drawable/ic_arrow_send"
-            app:iconTint="@color/colorPrimary"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
         <Button
+            style="@style/Theme.Walletv1.Button"
             android:id="@+id/receive_button"
             android:layout_width="155dp"
             android:layout_height="55dp"
             android:layout_marginTop="32dp"
             android:text="Receive"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            app:cornerRadius="@dimen/corner_radius"
             app:icon="@drawable/ic_arrow_receive"
-            app:iconTint="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />

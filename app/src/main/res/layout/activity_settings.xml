@@ -7,12 +7,11 @@
     tools:context="com.origindev.bglwallet.SettingsActivity">
 
     <Button
+        style="@style/Theme.Walletv1.Button"
         android:id="@+id/backup"
         android:layout_width="300dp"
         android:layout_height="65dp"
         android:text="Backup"
-        android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
         app:icon="@drawable/ic_insert_drive_file"
         app:iconTint="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/delete_wallet"
@@ -21,13 +20,12 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
+        style="@style/Theme.Walletv1.Button"
         android:id="@+id/delete_wallet"
         android:layout_width="300dp"
         android:layout_height="65dp"
         android:text="Logout wallet"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
         app:icon="@drawable/ic_delete_wallet"
         app:iconTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"

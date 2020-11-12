@@ -41,18 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         createWalletButton = findViewById(R.id.create_wallet_button)
         importWalletButton = findViewById(R.id.import_wallet)
-        createWalletButton.setBackgroundColor(
-            ContextCompat.getColor(
-                this,
-                R.color.colorButAndItemWalletAtiva
-            )
-        )
-        importWalletButton.setBackgroundColor(
-            ContextCompat.getColor(
-                this,
-                R.color.colorButAndItemWalletAtiva
-            )
-        )
+
         importWalletButton.setOnClickListener {
             val shar = SecSharPref()
             shar.setContext(applicationContext)

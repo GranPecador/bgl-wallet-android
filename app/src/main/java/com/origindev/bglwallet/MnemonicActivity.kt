@@ -25,12 +25,7 @@ class MnemonicActivity : AppCompatActivity() {
         first.text = wordsGroups.left
         second.text = wordsGroups.right
         continueButton = findViewById(R.id.continue_button)
-        continueButton.setBackgroundColor(
-            ContextCompat.getColor(
-                this,
-                R.color.colorButAndItemWalletAtiva
-            )
-        )
+
         continueButton.setOnClickListener {
             val intent = Intent(this, WalletActivity::class.java)
             intent.flags =

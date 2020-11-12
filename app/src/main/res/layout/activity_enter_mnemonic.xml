@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    tools:context=".EnterMnemonicActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/enter_mnemonic_prase_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingStart="16dp"
+        android:text="Enter phrase words:"
+        android:textAlignment="viewStart"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/mnemonic_word_1_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        app:prefixText="1 "
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_mnemonic_prase_text_view">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_1_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="2 "
+        android:id="@+id/mnemonic_word_2_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mnemonic_word_1_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_2_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="3 "
+        android:id="@+id/mnemonic_word_3_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mnemonic_word_2_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_3_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="4 "
+        android:id="@+id/mnemonic_word_4_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mnemonic_word_3_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_4_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="5 "
+        android:id="@+id/mnemonic_word_5_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mnemonic_word_4_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_5_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="6 "
+        android:id="@+id/mnemonic_word_6_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mnemonic_word_5_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_6_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="7 "
+        android:id="@+id/mnemonic_word_7_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mnemonic_word_6_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_7_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="8 "
+        android:id="@+id/mnemonic_word_8_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mnemonic_word_7_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_8_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="9 "
+        android:id="@+id/mnemonic_word_9_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mnemonic_word_8_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_9_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="10 "
+        android:id="@+id/mnemonic_word_10_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mnemonic_word_9_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_10_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="11 "
+        android:id="@+id/mnemonic_word_11_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mnemonic_word_10_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_11_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="12 "
+        android:id="@+id/mnemonic_word_12_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mnemonic_word_11_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_12_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:nextFocusDown="@id/mnemonic_word_13_edit"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="13 "
+        android:id="@+id/mnemonic_word_13_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/mnemonic_word_1_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_13_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="14 "
+        android:id="@+id/mnemonic_word_14_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_word_13_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_14_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="15 "
+        android:id="@+id/mnemonic_word_15_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_word_14_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_15_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="16 "
+        android:id="@+id/mnemonic_word_16_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_word_15_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_16_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="17 "
+        android:id="@+id/mnemonic_word_17_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_word_16_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_17_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="18 "
+        android:id="@+id/mnemonic_word_18_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_word_17_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_18_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="19 "
+        android:id="@+id/mnemonic_word_19_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_word_18_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_19_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="20 "
+        android:id="@+id/mnemonic_word_20_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_word_19_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_20_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="21 "
+        android:id="@+id/mnemonic_word_21_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_word_20_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_21_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="22 "
+        android:id="@+id/mnemonic_word_22_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_word_9_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_22_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="23 "
+        android:id="@+id/mnemonic_word_23_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_word_10_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_23_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:prefixText="24 "
+        android:id="@+id/mnemonic_word_24_input_layout"
+        style="@style/Theme.Walletv1.OutlinedBox"
+        android:layout_width="@dimen/wide_enter_mnemonic_word"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/mnemonic_word_11_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mnemonic_word_24_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/continue_entered_mnemonic_prase_button"
+        style="@style/Theme.Walletv1.Button"
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:text="Continue"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/enter_mnemonic_prase_text_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mnemonic_word_12_input_layout" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
