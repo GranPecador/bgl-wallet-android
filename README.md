@@ -16,6 +16,10 @@ This wallet use a light backend, but private keys stores on device only
 
 [Lightweight backend](https://github.com/semyon-dev/backend-bgl-wallet)
 
+## FAQ
+
+[Wiki](https://github.com/GranPecador/bgl-wallet-android/wiki/FAQ)
+
 ## LICENSE
 
 GPL-3.0 License
