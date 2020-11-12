@@ -36,7 +36,7 @@ class SelectImportDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
         builder.setMessage("Choose import method?")
-            .setPositiveButton("From file"){ _, _ ->
+            .setNeutralButton("From file"){ _, _ ->
                 fromFile(builder.context)
             }.setPositiveButton("Enter phase"){ _, _ ->
                 val intent = Intent(context, EnterMnemonicActivity::class.java)
