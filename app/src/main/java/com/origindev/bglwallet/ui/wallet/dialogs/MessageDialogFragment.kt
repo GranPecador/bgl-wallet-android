@@ -3,15 +3,11 @@ package com.origindev.bglwallet.ui.wallet.dialogs
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.origindev.bglwallet.R
 
 class MessageDialogFragment(private var message: String = "Can't") : DialogFragment() {
-    
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity, R.style.Theme_Walletv1_Dialog)
         builder.setMessage(message)
