@@ -58,6 +58,8 @@ class EnterMnemonicActivity : AppCompatActivity() {
                     wordEditText.requestFocus()
                     continueButton.isEnabled = true
                     return@setOnClickListener
+                } else {
+                    wordsList.add(word)
                 }
             }
             lifecycleScope.launch {
@@ -85,11 +87,9 @@ class EnterMnemonicActivity : AppCompatActivity() {
                         }
                     }
                 } else {
-                    val builder = AlertDialog.Builder(applicationContext)
-                    builder.setMessage("Can't import wallet")
-                        .setTitle("Error")
-                        .setNegativeButton(android.R.string.cancel, null)
-                    builder.create().show()
+                    AlertDialog.Builder(applicationContext).setMessage("Can't import wallet")
+                        .setTitle("Error").setNegativeButton(android.R.string.cancel, null)
+                        .create().show()
                 }
             }
             continueButton.isEnabled = true
