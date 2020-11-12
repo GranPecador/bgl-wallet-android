@@ -53,21 +53,21 @@ class EnterMnemonicActivity : AppCompatActivity() {
             val wordsList = ArrayList<String>()
             listEditText.forEach { wordEditText ->
                 val word = wordEditText.text.toString().trim()
-                if (word.isEmpty()) {
+                /*if (word.isEmpty()) {
                     wordEditText.error = "Word required!"
                     wordEditText.requestFocus()
                     continueButton.isEnabled = true
                     return@setOnClickListener
-                } else {
+                } else {*/
                     wordsList.add(word)
-                }
+                //}
             }
             lifecycleScope.launch {
                 val res = RetrofitClientInstance.instance.importWallet(
                     ImportModel(
                         wordsList.joinToString(
                             separator = " "
-                        )
+                        ).trim()
                     )
                 )
                 if (res.isSuccessful) {
@@ -87,6 +87,7 @@ class EnterMnemonicActivity : AppCompatActivity() {
                         }
                     }
                 } else {
+
                     AlertDialog.Builder(applicationContext).setMessage("Can't import wallet")
                         .setTitle("Error").setNegativeButton(android.R.string.cancel, null)
                         .create().show()
