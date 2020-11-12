@@ -1,14 +1,12 @@
 package com.origindev.bglwallet
 
-import android.app.Dialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import androidx.appcompat.app.AlertDialog
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.DialogFragment
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
 import java.io.File
@@ -21,6 +19,23 @@ class SettingsActivity : AppCompatActivity() {
 
         val backupButton: Button = findViewById(R.id.backup)
         val deleteButton: Button = findViewById(R.id.delete_wallet)
+        val textTeam: TextView = findViewById(R.id.textTeam)
+        val faqButton: Button = findViewById(R.id.faqButton)
+
+        textTeam.setOnClickListener {
+            val url = "https://github.com/GranPecador/bgl-wallet-android"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        }
+
+        faqButton.setOnClickListener {
+            val url = "https://github.com/GranPecador/bgl-wallet-android/wiki/FAQ"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        }
+
         deleteButton.setOnClickListener {
             val sha = SecSharPref()
             sha.setContext(context = applicationContext)

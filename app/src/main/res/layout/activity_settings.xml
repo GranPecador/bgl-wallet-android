@@ -7,8 +7,8 @@
     tools:context="com.origindev.bglwallet.SettingsActivity">
 
     <Button
-        style="@style/Theme.Walletv1.Button"
         android:id="@+id/backup"
+        style="@style/Theme.Walletv1.Button"
         android:layout_width="300dp"
         android:layout_height="65dp"
         android:text="Backup"
@@ -16,12 +16,12 @@
         app:iconTint="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/delete_wallet"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        style="@style/Theme.Walletv1.Button"
         android:id="@+id/delete_wallet"
+        style="@style/Theme.Walletv1.Button"
         android:layout_width="300dp"
         android:layout_height="65dp"
         android:text="Logout wallet"
@@ -30,10 +30,27 @@
         app:iconTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/faqButton"
+        style="@style/Theme.Walletv1.Button"
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:text="FAQ"
+        android:textAlignment="center"
+        app:iconTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/delete_wallet"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
+        android:id="@+id/textTeam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
