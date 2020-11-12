@@ -18,6 +18,7 @@ import com.origindev.bglwallet.R
 import com.origindev.bglwallet.model.TransactionModel
 import com.origindev.bglwallet.model.TransactionResponse
 import com.origindev.bglwallet.net.RetrofitClientInstance
+import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -94,23 +95,6 @@ class SendActivity : AppCompatActivity() {
         }
     }
 
-}
-
-class MessageDialogFragment(private val message: String) : DialogFragment() {
-
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        // Use the Builder class for convenient dialog construction
-        val builder = Builder(requireContext())
-        builder.setMessage(message)
-            .setNeutralButton(
-                "Ok"
-            ) { dialog, _ ->
-                dialog.dismiss()
-            }
-        view?.setBackgroundColor(resources.getColor(R.color.windowBackground))
-        return builder.create()
-    }
 }
 
 fun View.hideKeyboard() {

@@ -53,7 +53,7 @@ class SelectImportDialogFragment : DialogFragment() {
             val file = File(path)
             if (!file.exists()) {
                 val dialogFragment =
-                    SettingsActivity.MessageDialogFragment("Can't find file")
+                    MessageDialogFragment("Can't find file")
                 dialogFragment.show(
                     requireFragmentManager(),
                     "MessageDialogFragment"
@@ -81,7 +81,7 @@ class SelectImportDialogFragment : DialogFragment() {
             }
             //Toast.makeText(this, "Backup is success to ", Toast.LENGTH_SHORT).show()
             val dialogFragment =
-                SettingsActivity.MessageDialogFragment("Backup restored")
+                MessageDialogFragment("Backup restored")
             dialogFragment.show(
                 requireFragmentManager(),
                 "MessageDialogFragment"
@@ -93,7 +93,7 @@ class SelectImportDialogFragment : DialogFragment() {
 
         } catch (e: Exception) {
             val dialogFragment =
-                SettingsActivity.MessageDialogFragment("Can't import from")
+                MessageDialogFragment("Can't import from")
             dialogFragment.show(
                 requireFragmentManager(),
                 "MessageDialogFragment"

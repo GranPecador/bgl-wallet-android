@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
 import java.io.File
 
@@ -46,20 +47,6 @@ class SettingsActivity : AppCompatActivity() {
                 supportFragmentManager,
                 "MessageDialogFragment"
             )
-        }
-    }
-
-    class MessageDialogFragment(private val message: String) : DialogFragment() {
-        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            // Use the Builder class for convenient dialog construction
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setMessage(message)
-                .setPositiveButton(
-                    "Ok"
-                ) { dialog, _ ->
-                    dialog.dismiss()
-                }
-            return builder.create()
         }
     }
 }

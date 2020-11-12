@@ -2,15 +2,20 @@ package com.origindev.bglwallet
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
+import com.google.gson.TypeAdapter
 import com.origindev.bglwallet.model.ImportModel
+import com.origindev.bglwallet.model.TransactionResponse
 import com.origindev.bglwallet.net.RetrofitClientInstance
+import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 
 class EnterMnemonicActivity : AppCompatActivity() {
@@ -63,16 +68,15 @@ class EnterMnemonicActivity : AppCompatActivity() {
                 //}
             }
             lifecycleScope.launch {
-                val res = RetrofitClientInstance.instance.importWallet(
+                val response = RetrofitClientInstance.instance.importWallet(
                     ImportModel(
                         wordsList.joinToString(
                             separator = " "
                         ).trim()
                     )
                 )
-                if (res.isSuccessful) {
-                    res.body()?.let { it1 ->
-                        {
+                if (response.isSuccessful) {
+                    response.body()?.let { it1 ->
                             val shar = SecSharPref()
                             shar.setContext(applicationContext)
                             shar.putPrivateKeyAndAddress(
@@ -80,17 +84,27 @@ class EnterMnemonicActivity : AppCompatActivity() {
                                 it1.address,
                                 it1.mnemonic
                             )
-                            val intent = Intent(applicationContext, WalletActivity::class.java)
-                            intent.flags =
-                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(intent)
-                        }
+                        val intent =
+                            Intent(this@EnterMnemonicActivity, WalletActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
                     }
                 } else {
-
-                    AlertDialog.Builder(applicationContext).setMessage("Can't import wallet")
-                        .setTitle("Error").setNegativeButton(android.R.string.cancel, null)
-                        .create().show()
+                    var transactionResponse = TransactionResponse("Can't import!","")
+                    val gson = Gson()
+                    val adapter: TypeAdapter<TransactionResponse> =
+                        gson.getAdapter(TransactionResponse::class.java)
+                    try {
+                        if (response.errorBody() != null)
+                            transactionResponse = adapter.fromJson(
+                                response.errorBody()!!.string()
+                            )
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                    val dialog = MessageDialogFragment(transactionResponse.message)
+                    dialog.show(supportFragmentManager, "MessageDialogFragment")
                 }
             }
             continueButton.isEnabled = true
