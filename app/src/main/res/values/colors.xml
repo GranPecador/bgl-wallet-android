@@ -11,4 +11,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="windowBackground">#34333C</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_inactive">@color/colorButAndItemWalletAtiva</color>
+
+    <!-- dots active colors -->
+    <color name="dot_active">@color/colorPrimary</color>
+
 </resources>

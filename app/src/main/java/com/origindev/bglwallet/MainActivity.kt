@@ -16,6 +16,7 @@ import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
@@ -60,22 +61,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun createWallet(context: Context) {
-        val body = RetrofitClientInstance.instance.postNewWallet()
-        if (body.isSuccessful) {
-            body.body()?.let {
-                sh(context, it)
+        try {
+            val body = RetrofitClientInstance.instance.postNewWallet()
+            if (body.isSuccessful) {
+                body.body()?.let {
+                    sh(context, it)
+                }
+            } else {
+                createWalletButton.isEnabled = true
+                progressView.visibility = View.INVISIBLE
+                progressView.stopAnimation()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@MainActivity.applicationContext,
+                        "${body.code()}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
-        } else {
-            createWalletButton.isEnabled = true
-            progressView.visibility = View.INVISIBLE
-            progressView.stopAnimation()
-            withContext(Dispatchers.Main) {
-                Toast.makeText(
-                    this@MainActivity.applicationContext,
-                    "${body.code()}",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+        } catch (e:IOException) {
+            Toast.makeText(
+                this@MainActivity.applicationContext,
+                "Повторите попытку",
+                Toast.LENGTH_LONG).show()
         }
     }
 

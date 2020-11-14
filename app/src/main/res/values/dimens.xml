@@ -5,4 +5,6 @@
     <dimen name="corner_radius">16dp</dimen>
     <dimen name="space_between_items_recycler">8dp</dimen>
     <dimen name="wide_enter_mnemonic_word">130dp</dimen>
+    <dimen name="dots_height">35dp</dimen>
+    <dimen name="dots_margin_bottom">20dp</dimen>
 </resources>
