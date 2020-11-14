@@ -30,6 +30,11 @@ class IntroWalletActivity : AppCompatActivity() {
             R.layout.three_intro_layout,
             R.layout.four_intro_wallet
         )
+        val letsStartButton = findViewById<Button>(R.id.let_start_wallet_button)
+        letsStartButton.setOnClickListener {
+            launchHomeScreen()
+        }
+        val leverageIntroPanelLayout = findViewById<LinearLayout>(R.id.leverage_intro_panel_layout)
         introViewPager = findViewById<ViewPager2>(R.id.intro_view_pager).apply {
             offscreenPageLimit = 1
             adapter = object : FragmentStateAdapter(this@IntroWalletActivity) {
@@ -44,16 +49,18 @@ class IntroWalletActivity : AppCompatActivity() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     addBottomDots(position)
+                    if (position == layouts.size-1) {
+                        leverageIntroPanelLayout.visibility = View.GONE
+                        letsStartButton.visibility = View.VISIBLE
+                    } else {
+                        leverageIntroPanelLayout.visibility = View.VISIBLE
+                        letsStartButton.visibility = View.GONE
+                    }
                 }
             })
         }
 
         dotsLayout = findViewById(R.id.layoutDots)
-        val letsStartButton = findViewById<Button>(R.id.let_start_wallet_button)
-        letsStartButton.setOnClickListener {
-            launchHomeScreen()
-        }
-        val leverageIntroPanelLayout = findViewById<LinearLayout>(R.id.leverage_intro_panel_layout)
         findViewById<Button>(R.id.skip_intro_button).setOnClickListener {
             launchHomeScreen()
         }
@@ -65,6 +72,9 @@ class IntroWalletActivity : AppCompatActivity() {
                 if (current == layouts.size-1) {
                     leverageIntroPanelLayout.visibility = View.GONE
                     letsStartButton.visibility = View.VISIBLE
+                } else {
+                    leverageIntroPanelLayout.visibility = View.VISIBLE
+                    letsStartButton.visibility = View.GONE
                 }
             }
         }
