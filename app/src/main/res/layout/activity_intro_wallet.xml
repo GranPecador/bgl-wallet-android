@@ -18,7 +18,7 @@
     <LinearLayout
         android:id="@+id/leverage_intro_panel_layout"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="56dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
@@ -64,7 +64,7 @@
     <Button
         android:id="@+id/let_start_wallet_button"
         android:layout_width="0dp"
-        android:layout_height="65dp"
+        android:layout_height="56dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
