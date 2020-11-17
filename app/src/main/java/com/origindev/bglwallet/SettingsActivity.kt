@@ -63,9 +63,8 @@ class SettingsActivity : AppCompatActivity() {
             shar.setContext(applicationContext)
             val file = File(letDirectory, "24words_backup.txt")
             file.appendText(shar.getMnemonic())
-            //Toast.makeText(this, "Backup is success to ", Toast.LENGTH_SHORT).show()
             val dialogFragment =
-                MessageDialogFragment("Backup success: " + path.toString())
+                MessageDialogFragment("Backup success: ${path.toString()}/BGL_Backup/24words_backup.txt")
             dialogFragment.show(
                 supportFragmentManager,
                 "MessageDialogFragment"
