@@ -9,9 +9,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.PagerAdapter
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.origindev.bglwallet.repositories.FlagsPreferencesRepository
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 
 class IntroWalletActivity : AppCompatActivity() {
@@ -20,9 +24,30 @@ class IntroWalletActivity : AppCompatActivity() {
     private lateinit var dotsLayout: LinearLayout
     private lateinit var dots: Array<TextView?>
     private lateinit var layouts: IntArray
+    private lateinit var viewModel: FlagsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProvider(
+            this,
+            FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(this))
+        ).get(FlagsViewModel::class.java)
+
+        lifecycleScope.launch {
+            val flags = viewModel.flagsPreferencesFlow.first()
+            if (flags.logged) {
+                val intent = Intent(applicationContext, WalletActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            } else
+                if (flags.isFirstTimeLaunched) {
+                    val intent = Intent(applicationContext, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+        }
+
         setContentView(R.layout.activity_intro_wallet)
         layouts = intArrayOf(
             R.layout.first_intro_layout,
@@ -41,6 +66,7 @@ class IntroWalletActivity : AppCompatActivity() {
                 override fun createFragment(position: Int): Fragment {
                     return Fragment(layouts[position])
                 }
+
                 override fun getItemCount(): Int {
                     return layouts.size
                 }
@@ -49,7 +75,7 @@ class IntroWalletActivity : AppCompatActivity() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     addBottomDots(position)
-                    if (position == layouts.size-1) {
+                    if (position == layouts.size - 1) {
                         leverageIntroPanelLayout.visibility = View.GONE
                         letsStartButton.visibility = View.VISIBLE
                     } else {
@@ -69,7 +95,7 @@ class IntroWalletActivity : AppCompatActivity() {
             if (current < layouts.size) {
                 // move to next screen
                 introViewPager.currentItem = current
-                if (current == layouts.size-1) {
+                if (current == layouts.size - 1) {
                     leverageIntroPanelLayout.visibility = View.GONE
                     letsStartButton.visibility = View.VISIBLE
                 } else {
@@ -98,11 +124,11 @@ class IntroWalletActivity : AppCompatActivity() {
     }
 
     private fun getItem(i: Int): Int {
-        return introViewPager.getCurrentItem() + i
+        return introViewPager.currentItem + i
     }
 
     private fun launchHomeScreen() {
-        //prefManager.setFirstTimeLaunch(false)
+        viewModel.setFirstTimeLaunched()
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)

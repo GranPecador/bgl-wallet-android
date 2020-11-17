@@ -1,4 +1,4 @@
-package com.origindev.bglwallet.model
+package com.origindev.bglwallet.models
 
 import com.google.gson.annotations.SerializedName
 

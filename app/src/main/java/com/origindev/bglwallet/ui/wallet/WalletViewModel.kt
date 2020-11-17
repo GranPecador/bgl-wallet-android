@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.origindev.bglwallet.model.AmountWalletModel
-import com.origindev.bglwallet.model.HistoryItemModel
+import com.origindev.bglwallet.models.AmountWalletModel
 import com.origindev.bglwallet.net.RetrofitClientInstance
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.CoroutineScope

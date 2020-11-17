@@ -3,15 +3,17 @@ package com.origindev.bglwallet
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.origindev.bglwallet.repositories.FlagsPreferencesRepository
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
 import java.io.File
 
 class SettingsActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -40,6 +42,13 @@ class SettingsActivity : AppCompatActivity() {
             val sha = SecSharPref()
             sha.setContext(context = applicationContext)
             sha.deleteData()
+
+            val viewModel: FlagsViewModel = ViewModelProvider(
+                this,
+                FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(this))
+            ).get(FlagsViewModel::class.java)
+            viewModel.setLoggedIntoAccount(logged = false)
+
             val intent = Intent(this, MainActivity::class.java)
             intent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -48,7 +57,6 @@ class SettingsActivity : AppCompatActivity() {
 
         backupButton.setOnClickListener {
             val path = this.getExternalFilesDir(null)
-            Log.e("TAG --------------", path.toString())
             val letDirectory = File(path, "BGL_Backup")
             letDirectory.mkdirs()
             val shar = SecSharPref()

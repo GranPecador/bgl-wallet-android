@@ -2,16 +2,17 @@ package com.origindev.bglwallet
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import com.google.gson.TypeAdapter
-import com.origindev.bglwallet.model.ImportModel
-import com.origindev.bglwallet.model.TransactionResponse
+import com.origindev.bglwallet.models.ImportModel
+import com.origindev.bglwallet.models.TransactionResponse
 import com.origindev.bglwallet.net.RetrofitClientInstance
+import com.origindev.bglwallet.repositories.FlagsPreferencesRepository
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.launch
@@ -64,7 +65,7 @@ class EnterMnemonicActivity : AppCompatActivity() {
                     continueButton.isEnabled = true
                     return@setOnClickListener
                 } else {*/
-                    wordsList.add(word)
+                wordsList.add(word)
                 //}
             }
             lifecycleScope.launch {
@@ -77,13 +78,20 @@ class EnterMnemonicActivity : AppCompatActivity() {
                 )
                 if (response.isSuccessful) {
                     response.body()?.let { it1 ->
-                            val shar = SecSharPref()
-                            shar.setContext(applicationContext)
-                            shar.putPrivateKeyAndAddress(
-                                it1.privateKey,
-                                it1.address,
-                                it1.mnemonic
-                            )
+                        val shar = SecSharPref()
+                        shar.setContext(applicationContext)
+                        shar.putPrivateKeyAndAddress(
+                            it1.privateKey,
+                            it1.address,
+                            it1.mnemonic
+                        )
+
+                        val viewModel: FlagsViewModel = ViewModelProvider(
+                            this@EnterMnemonicActivity,
+                            FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(this@EnterMnemonicActivity))
+                        ).get(FlagsViewModel::class.java)
+                        viewModel.setLoggedIntoAccount(logged = true)
+
                         val intent =
                             Intent(this@EnterMnemonicActivity, WalletActivity::class.java)
                         intent.flags =
@@ -91,7 +99,7 @@ class EnterMnemonicActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 } else {
-                    var transactionResponse = TransactionResponse("Can't import!","")
+                    var transactionResponse = TransactionResponse("Can't import!", "")
                     val gson = Gson()
                     val adapter: TypeAdapter<TransactionResponse> =
                         gson.getAdapter(TransactionResponse::class.java)

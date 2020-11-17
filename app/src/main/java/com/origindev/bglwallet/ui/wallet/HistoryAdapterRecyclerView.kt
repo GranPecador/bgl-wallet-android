@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 import com.origindev.bglwallet.R
-import com.origindev.bglwallet.model.HistoryItemModel
+import com.origindev.bglwallet.models.HistoryItemModel
 import java.text.SimpleDateFormat
 import java.util.*
 

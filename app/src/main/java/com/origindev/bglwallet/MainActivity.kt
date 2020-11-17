@@ -7,10 +7,12 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.github.rahatarmanahmed.cpv.CircularProgressView
 import com.origindev.bglwallet.net.Result
 import com.origindev.bglwallet.net.RetrofitClientInstance
+import com.origindev.bglwallet.repositories.FlagsPreferencesRepository
 import com.origindev.bglwallet.ui.wallet.dialogs.SelectImportDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.Dispatchers
@@ -26,15 +28,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var progressView: CircularProgressView
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val shar = SecSharPref()
-        shar.setContext(applicationContext)
-        if (shar.getAddress().isNotEmpty()) {
-            val intent = Intent(this, WalletActivity::class.java)
-            intent.flags =
-                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
         progressView = findViewById(R.id.progress_view)
 
@@ -68,9 +63,7 @@ class MainActivity : AppCompatActivity() {
                     sh(context, it)
                 }
             } else {
-                createWalletButton.isEnabled = true
-                progressView.visibility = View.INVISIBLE
-                progressView.stopAnimation()
+                disableSpin()
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@MainActivity.applicationContext,
@@ -79,23 +72,35 @@ class MainActivity : AppCompatActivity() {
                     ).show()
                 }
             }
-        } catch (e:IOException) {
+        } catch (e: IOException) {
+            disableSpin()
             Toast.makeText(
                 this@MainActivity.applicationContext,
                 "Повторите попытку",
-                Toast.LENGTH_LONG).show()
+                Toast.LENGTH_LONG
+            ).show()
         }
+    }
+
+    private fun disableSpin() {
+        createWalletButton.isEnabled = true
+        progressView.visibility = View.INVISIBLE
+        progressView.stopAnimation()
     }
 
     private fun sh(context: Context, result: Result.Success) {
         val shar = SecSharPref()
         shar.setContext(context)
         shar.putPrivateKeyAndAddress(result.privateKey, result.address, result.mnemonic)
+
+        val viewModel: FlagsViewModel = ViewModelProvider(
+            this,
+            FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(this))
+        ).get(FlagsViewModel::class.java)
+        viewModel.setLoggedIntoAccount(logged = true)
+
         val intent = Intent(this, MnemonicActivity::class.java)
-        progressView.stopAnimation()
-        progressView.visibility = View.GONE
+        disableSpin()
         startActivity(intent)
     }
-
-
 }

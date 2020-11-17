@@ -5,18 +5,13 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.origindev.bglwallet.EnterMnemonicActivity
-import com.origindev.bglwallet.R
-import com.origindev.bglwallet.SettingsActivity
-import com.origindev.bglwallet.WalletActivity
-import com.origindev.bglwallet.model.ImportModel
+import com.origindev.bglwallet.*
+import com.origindev.bglwallet.models.ImportModel
 import com.origindev.bglwallet.net.RetrofitClientInstance
+import com.origindev.bglwallet.repositories.FlagsPreferencesRepository
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.launch
 import java.io.File
@@ -26,9 +21,9 @@ class SelectImportDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity, R.style.Theme_Walletv1_Dialog)
         builder.setMessage("Choose import method?")
-            .setNeutralButton("From file"){ _, _ ->
+            .setNeutralButton("From file") { _, _ ->
                 fromFile(builder.context)
-            }.setPositiveButton("Enter phase"){ _, _ ->
+            }.setPositiveButton("Enter phase") { _, _ ->
                 val intent = Intent(context, EnterMnemonicActivity::class.java)
                 startActivity(intent)
                 dismiss()
@@ -39,7 +34,8 @@ class SelectImportDialogFragment : DialogFragment() {
 
     fun fromFile(context: Context) {
         try {
-            val path = context.getExternalFilesDir(null).toString() + "/BGL_Backup/24words_backup.txt"
+            val path =
+                context.getExternalFilesDir(null).toString() + "/BGL_Backup/24words_backup.txt"
             val file = File(path)
             if (!file.exists()) {
                 val dialogFragment =
@@ -70,15 +66,20 @@ class SelectImportDialogFragment : DialogFragment() {
                 }
             }
             //Toast.makeText(this, "Backup is success to ", Toast.LENGTH_SHORT).show()
-            val dialogFragment =
-                MessageDialogFragment("Backup restored")
+            val dialogFragment = MessageDialogFragment("Backup restored")
             dialogFragment.show(
                 requireFragmentManager(),
                 "MessageDialogFragment"
             )
+
+            val viewModel: FlagsViewModel = ViewModelProvider(
+                this,
+                FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(context))
+            ).get(FlagsViewModel::class.java)
+            viewModel.setLoggedIntoAccount(logged = true)
+
             val intent = Intent(context, WalletActivity::class.java)
-            intent.flags =
-                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
 
         } catch (e: Exception) {

@@ -1,22 +1,19 @@
 package com.origindev.bglwallet.ui.wallet
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import androidx.appcompat.app.AlertDialog.Builder
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import com.google.gson.TypeAdapter
 import com.origindev.bglwallet.R
-import com.origindev.bglwallet.model.TransactionModel
-import com.origindev.bglwallet.model.TransactionResponse
+import com.origindev.bglwallet.models.TransactionModel
+import com.origindev.bglwallet.models.TransactionResponse
 import com.origindev.bglwallet.net.RetrofitClientInstance
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref

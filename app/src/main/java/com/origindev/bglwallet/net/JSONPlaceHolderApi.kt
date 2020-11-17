@@ -1,6 +1,6 @@
 package com.origindev.bglwallet.net
 
-import com.origindev.bglwallet.model.*
+import com.origindev.bglwallet.models.*
 import retrofit2.Response
 import retrofit2.http.*
 

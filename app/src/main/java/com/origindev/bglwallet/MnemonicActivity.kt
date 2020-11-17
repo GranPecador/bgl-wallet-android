@@ -1,11 +1,10 @@
 package com.origindev.bglwallet
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.origindev.bglwallet.utils.SecSharPref
 
 class MnemonicActivity : AppCompatActivity() {
@@ -27,6 +26,7 @@ class MnemonicActivity : AppCompatActivity() {
         continueButton = findViewById(R.id.continue_button)
 
         continueButton.setOnClickListener {
+
             val intent = Intent(this, WalletActivity::class.java)
             intent.flags =
                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
