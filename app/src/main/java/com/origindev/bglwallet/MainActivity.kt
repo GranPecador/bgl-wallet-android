@@ -149,10 +149,10 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
         shar.setContext(context)
         shar.putMnemonic(mnemonic)
         lifecycleScope.launch {
-            val res = RetrofitClientInstance.instance.importWallet(ImportModel(mnemonic))
-            if (res.isSuccessful) {
-                res.body()?.let { it1 ->
-                    {
+            try {
+                val res = RetrofitClientInstance.instance.importWallet(ImportModel(mnemonic.trim()))
+                if (res.isSuccessful) {
+                    res.body()?.let { it1 ->
                         val shar = SecSharPref()
                         shar.setContext(context)
                         shar.putPrivateKeyAndAddress(
@@ -162,23 +162,31 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
                         )
                     }
                 }
+
+                val dialogFragment = MessageDialogFragment("Backup restored")
+                dialogFragment.show(
+                    supportFragmentManager,
+                    "MessageDialogFragment"
+                )
+
+                val viewModel: FlagsViewModel = ViewModelProvider(
+                    this@MainActivity,
+                    FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(context))
+                ).get(FlagsViewModel::class.java)
+                viewModel.setLoggedIntoAccount(logged = true)
+
+                val intent = Intent(context, WalletActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            } catch (e: IOException) {
+                val dialogFragment =
+                    MessageDialogFragment("Can't connect to server. Try again, please.")
+                dialogFragment.show(
+                    supportFragmentManager,
+                    "MessageDialogFragment"
+                )
             }
         }
-        val dialogFragment = MessageDialogFragment("Backup restored")
-        dialogFragment.show(
-            supportFragmentManager,
-            "MessageDialogFragment"
-        )
-
-        val viewModel: FlagsViewModel = ViewModelProvider(
-            this,
-            FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(context))
-        ).get(FlagsViewModel::class.java)
-        viewModel.setLoggedIntoAccount(logged = true)
-
-        val intent = Intent(context, WalletActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
     }
 
     override fun importMnemonicFile() {
