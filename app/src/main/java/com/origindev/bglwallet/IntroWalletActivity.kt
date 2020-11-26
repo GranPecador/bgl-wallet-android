@@ -25,6 +25,10 @@ class IntroWalletActivity : AppCompatActivity() {
     private lateinit var dots: Array<TextView?>
     private lateinit var layouts: IntArray
     private lateinit var viewModel: FlagsViewModel
+    private lateinit var leverageIntroPanelLayout: LinearLayout
+    private lateinit var letsStartButton: Button
+    private lateinit var skipTextButton: Button
+    private lateinit var nextTextButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,11 +59,19 @@ class IntroWalletActivity : AppCompatActivity() {
             R.layout.three_intro_layout,
             R.layout.four_intro_wallet
         )
-        val letsStartButton = findViewById<Button>(R.id.let_start_wallet_button)
+        letsStartButton = findViewById<Button>(R.id.let_start_wallet_button)
         letsStartButton.setOnClickListener {
             launchHomeScreen()
         }
-        val leverageIntroPanelLayout = findViewById<LinearLayout>(R.id.leverage_intro_panel_layout)
+        skipTextButton = findViewById(R.id.skip_intro_textbutton)
+        skipTextButton.setOnClickListener {
+            launchHomeScreen()
+        }
+        nextTextButton = findViewById(R.id.next_intro_page_textbutton)
+        nextTextButton.setOnClickListener {
+            nextPage()
+        }
+        leverageIntroPanelLayout = findViewById<LinearLayout>(R.id.leverage_intro_panel_layout)
         introViewPager = findViewById<ViewPager2>(R.id.intro_view_pager).apply {
             offscreenPageLimit = 1
             adapter = object : FragmentStateAdapter(this@IntroWalletActivity) {
@@ -75,13 +87,7 @@ class IntroWalletActivity : AppCompatActivity() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     addBottomDots(position)
-                    if (position == layouts.size - 1) {
-                        leverageIntroPanelLayout.visibility = View.GONE
-                        letsStartButton.visibility = View.VISIBLE
-                    } else {
-                        leverageIntroPanelLayout.visibility = View.VISIBLE
-                        letsStartButton.visibility = View.GONE
-                    }
+                    updateBottomButtons(position)
                 }
             })
         }
@@ -91,21 +97,32 @@ class IntroWalletActivity : AppCompatActivity() {
             launchHomeScreen()
         }
         findViewById<Button>(R.id.next_intro_page_button).setOnClickListener {
-            val current: Int = getItem(+1)
-            if (current < layouts.size) {
-                // move to next screen
-                introViewPager.currentItem = current
-                if (current == layouts.size - 1) {
-                    leverageIntroPanelLayout.visibility = View.GONE
-                    letsStartButton.visibility = View.VISIBLE
-                } else {
-                    leverageIntroPanelLayout.visibility = View.VISIBLE
-                    letsStartButton.visibility = View.GONE
-                }
-            }
+            nextPage()
         }
+        addBottomDots(0)
+    }
 
+    fun nextPage() {
+        val current: Int = getItem(+1)
+        if (current < layouts.size) {
+            // move to next screen
+            introViewPager.currentItem = current
+            updateBottomButtons(current)
+        }
+    }
 
+    fun updateBottomButtons(position: Int) {
+        if (position == layouts.size - 1) {
+            leverageIntroPanelLayout.visibility = View.GONE
+            skipTextButton.visibility = View.GONE
+            nextTextButton.visibility = View.GONE
+            letsStartButton.visibility = View.VISIBLE
+        } else {
+            leverageIntroPanelLayout.visibility = View.VISIBLE
+            skipTextButton.visibility = View.VISIBLE
+            nextTextButton.visibility = View.VISIBLE
+            letsStartButton.visibility = View.GONE
+        }
     }
 
     private fun addBottomDots(currentPage: Int) {
