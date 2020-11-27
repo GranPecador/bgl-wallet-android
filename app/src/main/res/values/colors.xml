@@ -12,10 +12,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="windowBackground">#34333C</color>
 
-    <!-- dots inactive colors -->
-    <color name="dot_inactive">@color/colorButAndItemWalletAtiva</color>
-
-    <!-- dots active colors -->
-    <color name="dot_active">@color/colorPrimary</color>
+    <color name="dotInactive">@color/colorButAndItemWalletAtiva</color>
+    <color name="dotActive">@color/colorPrimary</color>
+    <color name="colorConfirnTransactionText">#828282</color>
 
 </resources>

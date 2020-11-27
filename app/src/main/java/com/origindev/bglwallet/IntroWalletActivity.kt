@@ -127,8 +127,8 @@ class IntroWalletActivity : AppCompatActivity() {
 
     private fun addBottomDots(currentPage: Int) {
         dots = arrayOfNulls(size = layouts.size)
-        val colorActive = resources.getColor(R.color.dot_active, theme)
-        val colorInactive = resources.getColor(R.color.dot_inactive, theme)
+        val colorActive = resources.getColor(R.color.dotActive, theme)
+        val colorInactive = resources.getColor(R.color.dotInactive, theme)
         dotsLayout.removeAllViews()
         for (i in dots.indices) {
             dots[i] = TextView(this)

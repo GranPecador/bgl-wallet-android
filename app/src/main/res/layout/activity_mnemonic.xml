@@ -63,10 +63,10 @@
             app:layout_constraintTop_toTopOf="@+id/first_column_mnemonic_words" />
 
         <Button
-            style="@style/Theme.Walletv1.Button"
             android:id="@+id/continue_button"
+            style="@style/Theme.Walletv1.Button"
             android:layout_width="310dp"
-            android:layout_height="65dp"
+            android:layout_height="60dp"
             android:text="Continue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

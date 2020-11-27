@@ -2,35 +2,62 @@ package com.origindev.bglwallet.ui.wallet
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
-import com.google.gson.Gson
-import com.google.gson.TypeAdapter
 import com.origindev.bglwallet.R
 import com.origindev.bglwallet.models.TransactionModel
-import com.origindev.bglwallet.models.TransactionResponse
-import com.origindev.bglwallet.net.RetrofitClientInstance
+import com.origindev.bglwallet.ui.wallet.dialogs.ConfirmTransactionDialogFragment
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
-import kotlinx.coroutines.launch
-import java.io.IOException
 
 
-class SendActivity : AppCompatActivity() {
+class SendActivity : AppCompatActivity(),
+    ConfirmTransactionDialogFragment.OnConfirmTransactionListener {
+
+    private lateinit var sendViewModel: SendViewModel
+    private lateinit var amountBGLEditText: TextInputEditText
+    private lateinit var receiverEditText: TextInputEditText
+    private lateinit var sendButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_send)
         title = "Send"
 
-        val amountBGLEditText = findViewById<TextInputEditText>(R.id.amount_sent_activity_edit)
-        val receiverEditText = findViewById<TextInputEditText>(R.id.address_sent_activity_edit)
+        amountBGLEditText = findViewById(R.id.amount_sent_activity_edit)
+        receiverEditText = findViewById(R.id.address_sent_activity_edit)
+        sendButton = findViewById(R.id.send_send_button)
 
-        val sendButton: Button = findViewById(R.id.send_send_button)
+        sendViewModel = ViewModelProvider(this).get(SendViewModel::class.java)
+        sendViewModel.responseTransaction.observe(this) {
+            when (it) {
+                TypeProcessTransaction.SUCCESS -> {
+                    sendButton.isEnabled = false
+                    showDialogResult("Transaction sent successful.")
+                }
+                TypeProcessTransaction.ERROR -> {
+                    showDialogResult(
+                        sendViewModel.transactionMessageError.value ?: "Can't sent transaction!"
+                    )
+                }
+                TypeProcessTransaction.INPROGRESS -> {
+                    sendButton.isEnabled = false
+                    amountBGLEditText.isEnabled = false
+                    receiverEditText.isEnabled = false
+                }
+                TypeProcessTransaction.NOTHING -> {
+                    sendButton.isEnabled = true
+                    amountBGLEditText.isEnabled = true
+                    receiverEditText.isEnabled = true
+                }
+            }
+
+        }
+
         sendButton.setOnClickListener {
             val amount = amountBGLEditText.text.toString().trim()
             val receiver = receiverEditText.text.toString().trim()
@@ -46,50 +73,37 @@ class SendActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             it.hideKeyboard()
-            val secSharPref = SecSharPref()
-            secSharPref.setContext(context = applicationContext)
-            val transactionModel = TransactionModel(
-                amount.toDouble(),
+            val amountDouble = amount.toDouble()
+
+            val dialogFragment =
+                ConfirmTransactionDialogFragment(sendSummBgl = amountDouble, toAddress = receiver)
+            dialogFragment.show(
+                supportFragmentManager,
+                "ConfirmTransactionDialogFragment"
+            )
+        }
+    }
+
+    private fun showDialogResult(message: String) {
+        val dialogFragment = MessageDialogFragment(message)
+        dialogFragment.show(
+            supportFragmentManager,
+            "MessageDialogFragment"
+        )
+        sendViewModel.updateValue(TypeProcessTransaction.NOTHING)
+    }
+
+    override fun onConfirm(amountDouble: Double, address: String) {
+        val secSharPref = SecSharPref()
+        secSharPref.setContext(context = applicationContext)
+        sendViewModel.sendTransaction(
+            TransactionModel(
+                amountDouble,
                 secSharPref.getAddress(),
-                receiver,
+                address,
                 secSharPref.getPrivateKey()
             )
-
-            lifecycleScope.launch {
-                val response = RetrofitClientInstance.instance.createTransaction(transactionModel)
-                Log.e("body", response.message())
-                Log.e("body", response.body().toString())
-
-                if (response.isSuccessful) {
-                    val dialogFragment = MessageDialogFragment("Send successful.")
-                    dialogFragment.show(
-                        supportFragmentManager,
-                        "MessageDialogFragment"
-                    )
-
-                } else {
-                    Log.d("response", "onResponse - Status : " + response.code())
-                    var transactionResponse = TransactionResponse("Can't sent transaction!","")
-                    val gson = Gson()
-                    val adapter: TypeAdapter<TransactionResponse> =
-                        gson.getAdapter(TransactionResponse::class.java)
-                    try {
-                        if (response.errorBody() != null)
-                            transactionResponse = adapter.fromJson(
-                            response.errorBody()!!.string()
-                        )
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                    Log.e("response", transactionResponse.message)
-                    val dialogFragment = MessageDialogFragment(transactionResponse.message)
-                    dialogFragment.show(
-                        supportFragmentManager,
-                        "MessageDialogFragment"
-                    )
-                }
-            }
-        }
+        )
     }
 
 }

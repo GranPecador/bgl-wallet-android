@@ -6,6 +6,6 @@
     <string name="title_settings">Setting</string>
     <string name="first_text_intro">Write down these 24 words in the correct order and store them in a secret place.</string>
     <string name="second_text_intro">Use these secret words to restore access to your wallet if you lose your password or access to this device.</string>
-    <string name="welcome_to_bitgesell">Welcome to Bitgesell!</string>
+    <string name="welcome_to_bitgesell">Bitgesell Wallet</string>
     <string name="title_activity_enter_mnemonic">Mnemonic phrase</string>
 </resources>

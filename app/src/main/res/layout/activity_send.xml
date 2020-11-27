@@ -75,7 +75,7 @@
     <Button
         android:id="@+id/send_send_button"
         android:layout_width="130dp"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_marginTop="32dp"
         android:text="Send"
         android:textColor="@color/white"

@@ -12,10 +12,10 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.origindev.bglwallet.R
-import com.origindev.bglwallet.utils.SecSharPref
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
+import com.origindev.bglwallet.R
+import com.origindev.bglwallet.utils.SecSharPref
 
 
 class ReceiveDialogFragment : DialogFragment() {
@@ -24,7 +24,6 @@ class ReceiveDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         customView = activity!!.layoutInflater.inflate(R.layout.receive_dialog_fragment, null)
-        customView.clipToOutline = true
         val address = customView.findViewById<Button>(R.id.address_dialog)
         val exitButton = customView.findViewById<Button>(R.id.exit)
         val sha = SecSharPref()
