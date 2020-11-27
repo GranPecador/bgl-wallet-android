@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.origindev.bglwallet.models.AmountWalletModel
 import com.origindev.bglwallet.net.RetrofitClientInstance
+import com.origindev.bglwallet.net.UsdRetrofitClientInstance
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,17 +18,33 @@ class WalletViewModel : ViewModel() {
 
     private val _amount: MutableLiveData<AmountWalletModel> = MutableLiveData()
     val amount: LiveData<AmountWalletModel> = _amount
+    private val _courseUsd: MutableLiveData<Double> = MutableLiveData()
+    val courseUsd: LiveData<Double> = _courseUsd
 
     val adapterRecyclerView = HistoryAdapterRecyclerView()
 
     fun getBalanceFromServer(context: Context) {
         viewModelScope.launch {
-            val secSharPref = SecSharPref()
-            secSharPref.setContext(context)
-            val response = RetrofitClientInstance.instance.getBalance(secSharPref.getAddress())
-            if (response.isSuccessful) {
-                _amount.value = response.body()
-            }
+            getBalanceBgl(context)
+        }
+        viewModelScope.launch {
+            getBalanceUsd()
+        }
+    }
+
+    private suspend fun getBalanceBgl(context: Context) {
+        val secSharPref = SecSharPref()
+        secSharPref.setContext(context)
+        val response = RetrofitClientInstance.instance.getBalance(secSharPref.getAddress())
+        if (response.isSuccessful) {
+            _amount.value = response.body()
+        }
+    }
+
+    private suspend fun getBalanceUsd() {
+        val response = UsdRetrofitClientInstance.instance.getCoinBglInDollars()
+        if (response.isSuccessful) {
+            _courseUsd.value = response.body()?.course?.usd
         }
     }
 

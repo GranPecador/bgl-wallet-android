@@ -66,8 +66,17 @@ class WalletFragment : Fragment() {
         amountText = root.findViewById(R.id.balance_text)
         amountUSDText = root.findViewById(R.id.balance_usd_text)
         walletViewModel.amount.observe(viewLifecycleOwner) {
-            amountText.text = "${it.amountBGL}  BGL"
-            amountUSDText.text = "${it.amountUSD} $"
+            val bgl = it.amountBGL
+            if (bgl != 0.0 && it.amountUSD == 0.0) {
+                it.amountUSD = bgl * (walletViewModel.courseUsd.value ?: 0.0)
+            }
+            amountText.text = "${bgl}  BGL"
+            amountUSDText.text = String.format("%.9f $", it.amountUSD)
+        }
+        walletViewModel.courseUsd.observe(viewLifecycleOwner) {
+            val amountUsd = it * (walletViewModel.amount.value?.amountBGL ?: 0.0)
+            walletViewModel.amount.value?.amountUSD = amountUsd
+            amountUSDText.text = String.format("%.9f $", amountUsd)
         }
         historyRecycler = root.findViewById(R.id.history_recycler)
         with(historyRecycler) {
@@ -81,7 +90,7 @@ class WalletFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        walletViewModel.getBalanceFromServer(context!!)
-        walletViewModel.getHistoryFromServer(context!!)
+        walletViewModel.getBalanceFromServer(this@WalletFragment.requireContext())
+        walletViewModel.getHistoryFromServer(this@WalletFragment.requireContext())
     }
 }
