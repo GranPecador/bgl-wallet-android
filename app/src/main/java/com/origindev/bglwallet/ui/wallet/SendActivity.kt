@@ -62,8 +62,8 @@ class SendActivity : AppCompatActivity(),
             val amount = amountBGLEditText.text.toString().trim()
             val receiver = receiverEditText.text.toString().trim()
 
-            if (amount.isEmpty()) {
-                amountBGLEditText.error = "Amount required!"
+            if (amount.isEmpty() || amount.toDouble() <= 0.0) {
+                amountBGLEditText.error = "Amount must be greater than zero!"
                 amountBGLEditText.requestFocus()
                 return@setOnClickListener
             }

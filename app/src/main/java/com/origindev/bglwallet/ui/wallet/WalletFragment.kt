@@ -71,12 +71,12 @@ class WalletFragment : Fragment() {
                 it.amountUSD = bgl * (walletViewModel.courseUsd.value ?: 0.0)
             }
             amountText.text = "${bgl}  BGL"
-            amountUSDText.text = String.format("%.9f $", it.amountUSD)
+            amountUSDText.text = String.format("%.4f $", it.amountUSD)
         }
         walletViewModel.courseUsd.observe(viewLifecycleOwner) {
             val amountUsd = it * (walletViewModel.amount.value?.amountBGL ?: 0.0)
             walletViewModel.amount.value?.amountUSD = amountUsd
-            amountUSDText.text = String.format("%.9f $", amountUsd)
+            amountUSDText.text = String.format("%.4f $", amountUsd)
         }
         historyRecycler = root.findViewById(R.id.history_recycler)
         with(historyRecycler) {
