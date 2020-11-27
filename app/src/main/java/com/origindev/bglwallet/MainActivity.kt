@@ -20,9 +20,7 @@ import com.origindev.bglwallet.repositories.FlagsPreferencesRepository
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.ui.wallet.dialogs.SelectImportDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 
 private const val READ_REQUEST_CODE = 42
@@ -52,6 +50,7 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
 
         createWalletButton.setOnClickListener {
             createWalletButton.isEnabled = false
+            importWalletButton.isEnabled = false
             progressView.visibility = View.VISIBLE
             progressView.startAnimation()
             lifecycleScope.launch {
@@ -90,29 +89,28 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
                     sh(context, it)
                 }
             } else {
+                Toast.makeText(
+                    this@MainActivity.applicationContext,
+                    "${body.code()}",
+                    Toast.LENGTH_LONG
+                ).show()
                 disableSpin()
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@MainActivity.applicationContext,
-                        "${body.code()}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
             }
         } catch (e: IOException) {
-            disableSpin()
             Toast.makeText(
                 this@MainActivity.applicationContext,
-                "Повторите попытку",
+                "Can't connect to server. Please, try again.",
                 Toast.LENGTH_LONG
             ).show()
+            disableSpin()
         }
     }
 
     private fun disableSpin() {
-        createWalletButton.isEnabled = true
         progressView.visibility = View.INVISIBLE
         progressView.stopAnimation()
+        createWalletButton.isEnabled = true
+        importWalletButton.isEnabled = true
     }
 
     private fun sh(context: Context, result: Result.Success) {
@@ -127,8 +125,8 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
         viewModel.setLoggedIntoAccount(logged = true)
 
         val intent = Intent(this, MnemonicActivity::class.java)
-        disableSpin()
         startActivity(intent)
+        disableSpin()
     }
 
     private fun getFile(uri: Uri, context: Context) {
@@ -144,7 +142,7 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
             )
             return
         }
-
+        inputStream?.close()
         val shar = SecSharPref()
         shar.setContext(context)
         shar.putMnemonic(mnemonic)
