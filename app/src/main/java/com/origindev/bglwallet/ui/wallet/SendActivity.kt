@@ -7,12 +7,15 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.origindev.bglwallet.R
 import com.origindev.bglwallet.models.TransactionModel
 import com.origindev.bglwallet.ui.wallet.dialogs.ConfirmTransactionDialogFragment
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 
 class SendActivity : AppCompatActivity(),
@@ -74,13 +77,20 @@ class SendActivity : AppCompatActivity(),
             }
             it.hideKeyboard()
             val amountDouble = amount.toDouble()
-
-            val dialogFragment =
-                ConfirmTransactionDialogFragment(sendSummBgl = amountDouble, toAddress = receiver)
-            dialogFragment.show(
-                supportFragmentManager,
-                "ConfirmTransactionDialogFragment"
-            )
+            lifecycleScope.launch {
+                val courseRepository: BglUsdCourseRepository = BglUsdCourseRepository.getInstance()
+                val course: Double = courseRepository.usdCourseFlow.first()
+                val dialogFragment =
+                    ConfirmTransactionDialogFragment(
+                        sendSummBgl = amountDouble,
+                        courseUsd = course,
+                        toAddress = receiver
+                    )
+                dialogFragment.show(
+                    supportFragmentManager,
+                    "ConfirmTransactionDialogFragment"
+                )
+            }
         }
     }
 

@@ -68,15 +68,15 @@ class WalletFragment : Fragment() {
         walletViewModel.amount.observe(viewLifecycleOwner) {
             val bgl = it.amountBGL
             if (bgl != 0.0 && it.amountUSD == 0.0) {
-                it.amountUSD = bgl * (walletViewModel.courseUsd.value ?: 0.0)
+                it.amountUSD = bgl * (walletViewModel.courseUsd.value ?: doubleZero)
             }
             amountText.text = "${bgl}  BGL"
-            amountUSDText.text = String.format("%.4f $", it.amountUSD)
+            setUsdInTextView(it.amountUSD)
         }
         walletViewModel.courseUsd.observe(viewLifecycleOwner) {
-            val amountUsd = it * (walletViewModel.amount.value?.amountBGL ?: 0.0)
+            val amountUsd = it * (walletViewModel.amount.value?.amountBGL ?: doubleZero)
             walletViewModel.amount.value?.amountUSD = amountUsd
-            amountUSDText.text = String.format("%.4f $", amountUsd)
+            setUsdInTextView(amountUsd)
         }
         historyRecycler = root.findViewById(R.id.history_recycler)
         with(historyRecycler) {
@@ -93,4 +93,18 @@ class WalletFragment : Fragment() {
         walletViewModel.getBalanceFromServer(this@WalletFragment.requireContext())
         walletViewModel.getHistoryFromServer(this@WalletFragment.requireContext())
     }
+
+    private fun setUsdInTextView(amountUsd: Double) {
+        val amountUsdStr = amountUsd.toString()
+        val dotIndex: Int = amountUsdStr.indexOf(".")
+
+        if ((amountUsdStr.substring(dotIndex).length) >= 4) {
+            amountUSDText.text = String.format("%.4f $", amountUsd)
+        } else {
+            amountUSDText.text = "$amountUsdStr $"
+        }
+
+    }
 }
+
+val doubleZero = "0.0".toDouble()

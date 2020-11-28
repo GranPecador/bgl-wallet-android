@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.origindev.bglwallet.models.AmountWalletModel
 import com.origindev.bglwallet.net.RetrofitClientInstance
-import com.origindev.bglwallet.net.UsdRetrofitClientInstance
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -20,6 +20,7 @@ class WalletViewModel : ViewModel() {
     val amount: LiveData<AmountWalletModel> = _amount
     private val _courseUsd: MutableLiveData<Double> = MutableLiveData()
     val courseUsd: LiveData<Double> = _courseUsd
+    val courseUsdRepository = BglUsdCourseRepository.getInstance()
 
     val adapterRecyclerView = HistoryAdapterRecyclerView()
 
@@ -42,9 +43,8 @@ class WalletViewModel : ViewModel() {
     }
 
     private suspend fun getBalanceUsd() {
-        val response = UsdRetrofitClientInstance.instance.getCoinBglInDollars()
-        if (response.isSuccessful) {
-            _courseUsd.value = response.body()?.course?.usd
+        courseUsdRepository.usdCourseFlow.collect {
+            _courseUsd.value = it
         }
     }
 
