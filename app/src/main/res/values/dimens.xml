@@ -3,6 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="corner_radius">16dp</dimen>
+    <dimen name="standard_button_height">60dp</dimen>
+    <dimen name="standard_button_width">310dp</dimen>
+    <dimen name="standard_small_button_width">155dp</dimen>
+    <dimen name="letter_spacing_when_phrase_does_not_fit_on_button">0.04</dimen>
     <dimen name="space_between_items_recycler">8dp</dimen>
     <dimen name="wide_enter_mnemonic_word">130dp</dimen>
     <dimen name="dots_height">35dp</dimen>

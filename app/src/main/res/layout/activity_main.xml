@@ -35,8 +35,8 @@
     <Button
         android:id="@+id/create_wallet_button"
         style="@style/Theme.Walletv1.Button"
-        android:layout_width="310dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/standard_button_width"
+        android:layout_height="@dimen/standard_button_height"
         android:layout_marginTop="32dp"
         android:paddingStart="20dp"
         android:paddingTop="10dp"
@@ -52,8 +52,8 @@
     <Button
         android:id="@+id/import_wallet"
         style="@style/Theme.Walletv1.Button"
-        android:layout_width="310dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/standard_button_width"
+        android:layout_height="@dimen/standard_button_height"
         android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:paddingEnd="20dp"

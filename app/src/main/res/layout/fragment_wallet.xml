@@ -87,8 +87,8 @@
         <Button
             style="@style/Theme.Walletv1.Button"
             android:id="@+id/send_button"
-            android:layout_width="155dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/standard_small_button_width"
+            android:layout_height="@dimen/standard_button_height"
             android:layout_marginTop="26dp"
             android:text="Send"
             app:icon="@drawable/ic_arrow_send"
@@ -99,8 +99,8 @@
         <Button
             style="@style/Theme.Walletv1.Button"
             android:id="@+id/receive_button"
-            android:layout_width="155dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/standard_small_button_width"
+            android:layout_height="@dimen/standard_button_height"
             android:layout_marginTop="26dp"
             android:text="Receive"
             app:icon="@drawable/ic_arrow_receive"

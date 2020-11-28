@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.origindev.bglwallet.EnterMnemonicActivity
 import com.origindev.bglwallet.R
@@ -14,17 +15,19 @@ class SelectImportDialogFragment : DialogFragment() {
     var listener: OnOpenBrowserFilesListener? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(activity, R.style.Theme_Walletv1_Dialog)
-        builder.setMessage("Choose import method?")
-            .setNeutralButton("From file") { _, _ ->
-                listener?.importMnemonicFile()
-            }.setPositiveButton("Enter phase") { _, _ ->
+        val customView =
+            activity!!.layoutInflater.inflate(R.layout.select_import_mnemonic_dialog, null)
+        customView.findViewById<Button>(R.id.from_file_import_mnemonic_button).setOnClickListener {
+            listener?.importMnemonicFile()
+        }
+        customView.findViewById<Button>(R.id.enter_phrase_import_mnemonic_button)
+            .setOnClickListener {
                 val intent = Intent(context, EnterMnemonicActivity::class.java)
                 startActivity(intent)
                 dismiss()
             }
-
-        return builder.create()
+        return AlertDialog.Builder(activity, R.style.Theme_Walletv1_Dialog).setView(customView)
+            .create()
     }
 
     override fun onAttach(context: Context) {

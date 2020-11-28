@@ -36,6 +36,7 @@
         android:id="@+id/mnemonic_word_1_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         app:prefixText="1 "
+        app:expandedHintEnabled="false"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -55,6 +56,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="2 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_2_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -76,6 +78,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="3 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_3_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -97,6 +100,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="4 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_4_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -118,6 +122,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="5 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_5_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -138,6 +143,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        app:expandedHintEnabled="false"
         app:prefixText="6 "
         android:id="@+id/mnemonic_word_6_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
@@ -160,6 +166,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="7 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_7_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -181,6 +188,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="8 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_8_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -202,6 +210,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="9 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_9_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -223,6 +232,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="10 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_10_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -244,6 +254,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="11 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_11_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -265,6 +276,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="12 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_12_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -287,6 +299,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="13 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_13_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -306,6 +319,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="14 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_14_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -326,6 +340,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="15 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_15_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -346,6 +361,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="16 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_16_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -366,6 +382,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="17 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_17_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -386,6 +403,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="18 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_18_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -406,6 +424,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="19 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_19_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -426,6 +445,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="20 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_20_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -446,6 +466,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="21 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_21_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -467,6 +488,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="22 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_22_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -488,6 +510,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="23 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_23_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -508,6 +531,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         app:prefixText="24 "
+        app:expandedHintEnabled="false"
         android:id="@+id/mnemonic_word_24_input_layout"
         style="@style/Theme.Walletv1.OutlinedBox"
         android:layout_width="@dimen/wide_enter_mnemonic_word"
@@ -529,8 +553,8 @@
     <Button
         android:id="@+id/continue_entered_mnemonic_prase_button"
         style="@style/Theme.Walletv1.Button"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/standard_button_width"
+        android:layout_height="@dimen/standard_button_height"
         android:layout_marginTop="20dp"
         android:text="Continue"
         android:textAlignment="center"

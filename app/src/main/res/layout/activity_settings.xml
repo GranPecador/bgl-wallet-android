@@ -9,8 +9,8 @@
     <Button
         android:id="@+id/backup"
         style="@style/Theme.Walletv1.Button"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/standard_button_width"
+        android:layout_height="@dimen/standard_button_height"
         android:text="Backup"
         app:icon="@drawable/ic_insert_drive_file"
         app:iconTint="@color/colorPrimary"
@@ -22,8 +22,8 @@
     <Button
         android:id="@+id/delete_wallet"
         style="@style/Theme.Walletv1.Button"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/standard_button_width"
+        android:layout_height="@dimen/standard_button_height"
         android:text="Logout wallet"
         android:textAlignment="center"
         app:icon="@drawable/ic_delete_wallet"
@@ -37,8 +37,8 @@
     <Button
         android:id="@+id/faqButton"
         style="@style/Theme.Walletv1.Button"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/standard_button_width"
+        android:layout_height="@dimen/standard_button_height"
         android:text="FAQ"
         android:textAlignment="center"
         app:icon="@drawable/ic_faq"
