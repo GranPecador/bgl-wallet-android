@@ -11,6 +11,7 @@ import com.origindev.bglwallet.repositories.FlagsPreferencesRepository
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
 import java.io.File
+import java.nio.charset.StandardCharsets
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -61,10 +62,15 @@ class SettingsActivity : AppCompatActivity() {
             letDirectory.mkdirs()
             val shar = SecSharPref()
             shar.setContext(applicationContext)
-            val file = File(letDirectory, "24words_backup.txt")
-            file.appendText(shar.getMnemonic())
+            var file = File(letDirectory, "24words_backup.txt")
+            var i = 0
+            while (file.exists()) {
+                i++
+                file = File(letDirectory, "24words_backup$i.txt")
+            }
+            file.writeText(shar.getMnemonic() + "\n", charset = StandardCharsets.UTF_8)
             val dialogFragment =
-                MessageDialogFragment("Backup success: ${path.toString()}/BGL_Backup/24words_backup.txt")
+                MessageDialogFragment("Backup success: ${file.path}")
             dialogFragment.show(
                 supportFragmentManager,
                 "MessageDialogFragment"
