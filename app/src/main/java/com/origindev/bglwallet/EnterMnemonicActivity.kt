@@ -8,16 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
-import com.google.gson.TypeAdapter
 import com.origindev.bglwallet.models.ImportModel
 import com.origindev.bglwallet.models.TransactionResponse
 import com.origindev.bglwallet.net.RetrofitClientInstance
 import com.origindev.bglwallet.repositories.FlagsPreferencesRepository
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
+import com.origindev.bglwallet.utils.Check
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.launch
-import java.io.IOException
-
 
 class EnterMnemonicActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,54 +66,55 @@ class EnterMnemonicActivity : AppCompatActivity() {
                 wordsList.add(word)
                 //}
             }
-            lifecycleScope.launch {
-                val response = RetrofitClientInstance.instance.importWallet(
-                    ImportModel(
-                        wordsList.joinToString(
-                            separator = " "
-                        ).trim()
-                    )
-                )
-                if (response.isSuccessful) {
-                    response.body()?.let { it1 ->
-                        val shar = SecSharPref()
-                        shar.setContext(applicationContext)
-                        shar.putPrivateKeyAndAddress(
-                            it1.privateKey,
-                            it1.address,
-                            it1.mnemonic
-                        )
-
-                        val viewModel: FlagsViewModel = ViewModelProvider(
-                            this@EnterMnemonicActivity,
-                            FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(this@EnterMnemonicActivity))
-                        ).get(FlagsViewModel::class.java)
-                        viewModel.setLoggedIntoAccount(logged = true)
-
-                        val intent =
-                            Intent(this@EnterMnemonicActivity, WalletActivity::class.java)
-                        intent.flags =
-                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-                    }
-                } else {
-                    var transactionResponse = TransactionResponse("Can't import!", "")
-                    val gson = Gson()
-                    val adapter: TypeAdapter<TransactionResponse> =
-                        gson.getAdapter(TransactionResponse::class.java)
-                    try {
-                        if (response.errorBody() != null)
-                            transactionResponse = adapter.fromJson(
-                                response.errorBody()!!.string()
-                            )
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                    val dialog = MessageDialogFragment(transactionResponse.message)
-                    dialog.show(supportFragmentManager, "MessageDialogFragment")
-                }
+            val phrase = wordsList.joinToString(separator = " ")
+            if (Check.isPhraseCorrect(phrase)) {
+                getWallet(phrase)
+            } else {
+                val dialog = MessageDialogFragment(getString(R.string.phrase_is_not_correct))
+                dialog.show(supportFragmentManager, "MessageDialogFragment")
             }
             continueButton.isEnabled = true
+        }
+    }
+
+    private fun getWallet(phrase: String) {
+        lifecycleScope.launch {
+            val response = RetrofitClientInstance.instance.importWallet(
+                ImportModel(phrase)
+            )
+            if (response.isSuccessful) {
+                response.body()?.let { it1 ->
+                    val shar = SecSharPref()
+                    shar.setContext(applicationContext)
+                    shar.putPrivateKeyAndAddress(
+                        it1.privateKey,
+                        it1.address,
+                        it1.mnemonic
+                    )
+
+                    val viewModel: FlagsViewModel = ViewModelProvider(
+                        this@EnterMnemonicActivity,
+                        FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(this@EnterMnemonicActivity))
+                    ).get(FlagsViewModel::class.java)
+                    viewModel.setLoggedIntoAccount(logged = true)
+
+                    val intent =
+                        Intent(this@EnterMnemonicActivity, WalletActivity::class.java)
+                    intent.flags =
+                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+            } else {
+                var transactionResponse = TransactionResponse("Can't import!", "")
+                response.errorBody()?.let {
+                    transactionResponse = Gson().fromJson(
+                        it.charStream(),
+                        TransactionResponse::class.java
+                    )
+                }
+                val dialog = MessageDialogFragment(transactionResponse.message)
+                dialog.show(supportFragmentManager, "MessageDialogFragment")
+            }
         }
     }
 }

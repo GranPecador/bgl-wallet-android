@@ -30,11 +30,12 @@ class SendViewModel : ViewModel() {
                 _responseTransaction.value = TypeProcessTransaction.SUCCESS
             } else {
                 var transactionResponse = TransactionResponse("Can't sent transaction!", "")
-                if (response.errorBody() != null)
+                response.errorBody()?.let {
                     transactionResponse = Gson().fromJson(
-                        response.errorBody()!!.charStream(),
+                        it.charStream(),
                         TransactionResponse::class.java
                     )
+                }
                 _transactionMessageError.value = transactionResponse.message
                 _responseTransaction.value = TypeProcessTransaction.ERROR
             }

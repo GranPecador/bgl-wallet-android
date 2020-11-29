@@ -73,12 +73,7 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
                 if (uri != null) {
                     getFile(uri)
                 } else {
-                    val dialogFragment =
-                        MessageDialogFragment("Can't find file")
-                    dialogFragment.show(
-                        supportFragmentManager,
-                        "MessageDialogFragment"
-                    )
+                    showMessageDialog("Can't find file")
                 }
             }
         }
@@ -142,7 +137,7 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
         if (Check.isPhraseCorrect(mnemonic)) {
             getWallet(mnemonic)
         } else {
-            showMessageDialog("Your phase isn't correct. The phrase consists of 24 words separated by a space.")
+            showMessageDialog(getString(R.string.phrase_is_not_correct))
         }
     }
 
