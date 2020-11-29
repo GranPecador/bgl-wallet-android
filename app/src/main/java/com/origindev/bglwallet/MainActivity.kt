@@ -19,9 +19,11 @@ import com.origindev.bglwallet.net.RetrofitClientInstance
 import com.origindev.bglwallet.repositories.FlagsPreferencesRepository
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.ui.wallet.dialogs.SelectImportDialogFragment
+import com.origindev.bglwallet.utils.Check
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.launch
 import java.io.IOException
+import java.nio.charset.StandardCharsets
 
 private const val READ_REQUEST_CODE = 42
 
@@ -58,6 +60,7 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
 
             }
         }
+        disableSpin()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
@@ -68,7 +71,7 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
                 val uri = resultData.data
                 Log.i("uri", "Uri: " + uri.toString())
                 if (uri != null) {
-                    getFile(uri, applicationContext)
+                    getFile(uri)
                 } else {
                     val dialogFragment =
                         MessageDialogFragment("Can't find file")
@@ -123,36 +126,34 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
             FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(this))
         ).get(FlagsViewModel::class.java)
         viewModel.setLoggedIntoAccount(logged = true)
-
         val intent = Intent(this, MnemonicActivity::class.java)
         startActivity(intent)
-        disableSpin()
     }
 
-    private fun getFile(uri: Uri, context: Context) {
+    private fun getFile(uri: Uri) {
         val inputStream = contentResolver.openInputStream(uri)
-        val buffer = inputStream?.bufferedReader()
-        val mnemonic = buffer?.readLine() ?: ""
+        val buffer = inputStream?.bufferedReader(charset = StandardCharsets.UTF_8)
+        val mnemonic = (buffer?.readLine() ?: "").trim()
         if (mnemonic.isEmpty()) {
-            val dialogFragment =
-                MessageDialogFragment("Can't import from file. It is empty. Please, write all words through space.")
-            dialogFragment.show(
-                supportFragmentManager,
-                "MessageDialogFragment"
-            )
+            showMessageDialog("Can't import from file. It is empty. Please, write all words through space.")
             return
         }
         inputStream?.close()
-        val shar = SecSharPref()
-        shar.setContext(context)
-        shar.putMnemonic(mnemonic)
+        if (Check.isPhraseCorrect(mnemonic)) {
+            getWallet(mnemonic)
+        } else {
+            showMessageDialog("Your phase isn't correct. The phrase consists of 24 words separated by a space.")
+        }
+    }
+
+    private fun getWallet(mnemonic: String) {
         lifecycleScope.launch {
             try {
-                val res = RetrofitClientInstance.instance.importWallet(ImportModel(mnemonic.trim()))
+                val res = RetrofitClientInstance.instance.importWallet(ImportModel(mnemonic))
                 if (res.isSuccessful) {
                     res.body()?.let { it1 ->
                         val shar = SecSharPref()
-                        shar.setContext(context)
+                        shar.setContext(applicationContext)
                         shar.putPrivateKeyAndAddress(
                             it1.privateKey,
                             it1.address,
@@ -161,30 +162,30 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
                     }
                 }
 
-                val dialogFragment = MessageDialogFragment("Backup restored")
-                dialogFragment.show(
-                    supportFragmentManager,
-                    "MessageDialogFragment"
-                )
+                showMessageDialog("Backup restored")
 
                 val viewModel: FlagsViewModel = ViewModelProvider(
                     this@MainActivity,
-                    FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(context))
+                    FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(applicationContext))
                 ).get(FlagsViewModel::class.java)
                 viewModel.setLoggedIntoAccount(logged = true)
 
-                val intent = Intent(context, WalletActivity::class.java)
+                val intent = Intent(applicationContext, WalletActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             } catch (e: IOException) {
-                val dialogFragment =
-                    MessageDialogFragment("Can't connect to server. Try again, please.")
-                dialogFragment.show(
-                    supportFragmentManager,
-                    "MessageDialogFragment"
-                )
+                showMessageDialog("Can't connect to server. Try again, please.")
             }
         }
+    }
+
+    private fun showMessageDialog(message: String) {
+        val dialogFragment =
+            MessageDialogFragment(message)
+        dialogFragment.show(
+            supportFragmentManager,
+            "MessageDialogFragment"
+        )
     }
 
     override fun importMnemonicFile() {

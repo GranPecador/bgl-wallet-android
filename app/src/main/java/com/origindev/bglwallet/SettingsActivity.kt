@@ -60,14 +60,14 @@ class SettingsActivity : AppCompatActivity() {
             val path = this.getExternalFilesDir(null)
             val letDirectory = File(path, "BGL_Backup")
             letDirectory.mkdirs()
-            val shar = SecSharPref()
-            shar.setContext(applicationContext)
             var file = File(letDirectory, "24words_backup.txt")
             var i = 0
             while (file.exists()) {
                 i++
                 file = File(letDirectory, "24words_backup$i.txt")
             }
+            val shar = SecSharPref()
+            shar.setContext(applicationContext)
             file.writeText(shar.getMnemonic() + "\n", charset = StandardCharsets.UTF_8)
             val dialogFragment =
                 MessageDialogFragment("Backup success: ${file.path}")
