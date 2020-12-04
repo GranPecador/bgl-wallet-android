@@ -62,11 +62,11 @@ class SettingsActivity : AppCompatActivity() {
             try {
                 val letDirectory = File(path, "BGL_Backup")
                 letDirectory.mkdirs()
-                var file = File(letDirectory, "24words_backup.txt")
+                var file = File(letDirectory, "bgl_wallet_backup.txt")
                 var i = 0
                 while (file.exists()) {
                     i++
-                    file = File(letDirectory, "24words_backup$i.txt")
+                    file = File(letDirectory, "bgl_wallet_backup$i.txt")
                 }
                 val shar = SecSharPref()
                 shar.setContext(applicationContext)

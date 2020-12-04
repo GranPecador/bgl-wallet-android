@@ -202,7 +202,7 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
         try {
             val letDirectory = File(path, "BGL_Backup")
             val files = letDirectory.listFiles { _, filename ->
-                filename.startsWith("24words_backup") && filename.endsWith(".txt")
+                filename.startsWith("bgl_wallet_backup") && filename.endsWith(".txt")
             }
             val adapter = BackupFilesAdapterRecyclerView(files, this)
             val dialogFragment = FoundBackupFilesDialogFragment(adapter)
