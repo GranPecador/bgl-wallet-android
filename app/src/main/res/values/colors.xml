@@ -15,5 +15,6 @@
     <color name="dotInactive">@color/colorButAndItemWalletAtiva</color>
     <color name="dotActive">@color/colorPrimary</color>
     <color name="colorConfirnTransactionText">#828282</color>
+    <color name="colorSmallText">#BEBEBE</color>
 
 </resources>

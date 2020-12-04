@@ -62,6 +62,7 @@ dependencies {
 
     implementation "androidx.datastore:datastore-preferences:1.0.0-alpha02"
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

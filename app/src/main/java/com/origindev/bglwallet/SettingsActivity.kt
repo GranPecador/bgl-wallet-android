@@ -11,6 +11,7 @@ import com.origindev.bglwallet.repositories.FlagsPreferencesRepository
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref
 import java.io.File
+import java.io.IOException
 import java.nio.charset.StandardCharsets
 
 class SettingsActivity : AppCompatActivity() {
@@ -58,23 +59,31 @@ class SettingsActivity : AppCompatActivity() {
 
         backupButton.setOnClickListener {
             val path = this.getExternalFilesDir(null)
-            val letDirectory = File(path, "BGL_Backup")
-            letDirectory.mkdirs()
-            var file = File(letDirectory, "24words_backup.txt")
-            var i = 0
-            while (file.exists()) {
-                i++
-                file = File(letDirectory, "24words_backup$i.txt")
+            try {
+                val letDirectory = File(path, "BGL_Backup")
+                letDirectory.mkdirs()
+                var file = File(letDirectory, "24words_backup.txt")
+                var i = 0
+                while (file.exists()) {
+                    i++
+                    file = File(letDirectory, "24words_backup$i.txt")
+                }
+                val shar = SecSharPref()
+                shar.setContext(applicationContext)
+                file.writeText(shar.getMnemonic() + "\n", charset = StandardCharsets.UTF_8)
+                showMessageDialog("Backup success: ${file.path}")
+            } catch (e: IOException) {
+                showMessageDialog(e.message ?: "error")
             }
-            val shar = SecSharPref()
-            shar.setContext(applicationContext)
-            file.writeText(shar.getMnemonic() + "\n", charset = StandardCharsets.UTF_8)
-            val dialogFragment =
-                MessageDialogFragment("Backup success: ${file.path}")
-            dialogFragment.show(
-                supportFragmentManager,
-                "MessageDialogFragment"
-            )
         }
+    }
+
+    private fun showMessageDialog(message: String) {
+        val dialogFragment =
+            MessageDialogFragment(message)
+        dialogFragment.show(
+            supportFragmentManager,
+            "MessageDialogFragment"
+        )
     }
 }

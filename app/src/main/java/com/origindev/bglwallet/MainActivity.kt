@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.github.rahatarmanahmed.cpv.CircularProgressView
@@ -17,17 +18,20 @@ import com.origindev.bglwallet.models.ImportModel
 import com.origindev.bglwallet.net.Result
 import com.origindev.bglwallet.net.RetrofitClientInstance
 import com.origindev.bglwallet.repositories.FlagsPreferencesRepository
+import com.origindev.bglwallet.ui.wallet.dialogs.FoundBackupFilesDialogFragment
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.ui.wallet.dialogs.SelectImportDialogFragment
 import com.origindev.bglwallet.utils.Check
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.launch
+import java.io.File
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 
 private const val READ_REQUEST_CODE = 42
 
-class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrowserFilesListener {
+class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrowserFilesListener,
+    FoundBackupFilesDialogFragment.OnFileBackupSelected {
 
     private lateinit var createWalletButton: Button
     private lateinit var importWalletButton: Button
@@ -184,10 +188,32 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
     }
 
     override fun importMnemonicFile() {
-        performFileSearch()
+        performFileSearchExists()
     }
 
-    private fun performFileSearch() {
+    override fun onSelectedFile(file: File) {
+        getFile(file.toUri())
+    }
+
+    override fun onNotFileBackupSelected() {
+        performFileSelection()
+    }
+
+    private fun performFileSearchExists() {
+        val path = this.getExternalFilesDir(null)
+        try {
+            val letDirectory = File(path, "BGL_Backup")
+            val files = letDirectory.listFiles { _, filename ->
+                filename.startsWith("24words_backup") && filename.endsWith(".txt")
+            }
+            val adapter = BackupFilesAdapterRecyclerView(files, this)
+            val dialogFragment = FoundBackupFilesDialogFragment(adapter)
+            dialogFragment.show(supportFragmentManager, "FoundBackupFilesDialogFragment")
+        } catch (e: IOException) {
+        }
+    }
+
+    private fun performFileSelection() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
 
         intent.addCategory(Intent.CATEGORY_OPENABLE)

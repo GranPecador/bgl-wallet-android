@@ -19,6 +19,7 @@ class SelectImportDialogFragment : DialogFragment() {
             activity!!.layoutInflater.inflate(R.layout.select_import_mnemonic_dialog, null)
         customView.findViewById<Button>(R.id.from_file_import_mnemonic_button).setOnClickListener {
             listener?.importMnemonicFile()
+            dismiss()
         }
         customView.findViewById<Button>(R.id.enter_phrase_import_mnemonic_button)
             .setOnClickListener {
