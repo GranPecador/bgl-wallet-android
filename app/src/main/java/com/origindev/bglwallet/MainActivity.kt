@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -73,7 +72,6 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
         if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             if (resultData != null) {
                 val uri = resultData.data
-                Log.i("uri", "Uri: " + uri.toString())
                 if (uri != null) {
                     getFile(uri)
                 } else {
