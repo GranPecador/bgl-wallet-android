@@ -9,6 +9,7 @@ import com.origindev.bglwallet.models.TransactionModel
 import com.origindev.bglwallet.models.TransactionResponse
 import com.origindev.bglwallet.net.RetrofitClientInstance
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 enum class TypeProcessTransaction {
     INPROGRESS, SUCCESS, ERROR, NOTHING
@@ -25,18 +26,23 @@ class SendViewModel : ViewModel() {
     fun sendTransaction(transactionModel: TransactionModel) {
         _responseTransaction.value = TypeProcessTransaction.INPROGRESS
         viewModelScope.launch {
-            val response = RetrofitClientInstance.instance.createTransaction(transactionModel)
-            if (response.isSuccessful) {
-                _responseTransaction.value = TypeProcessTransaction.SUCCESS
-            } else {
-                var transactionResponse = TransactionResponse("Can't sent transaction!", "")
-                response.errorBody()?.let {
-                    transactionResponse = Gson().fromJson(
-                        it.charStream(),
-                        TransactionResponse::class.java
-                    )
+            try {
+                val response = RetrofitClientInstance.instance.createTransaction(transactionModel)
+                if (response.isSuccessful) {
+                    _responseTransaction.value = TypeProcessTransaction.SUCCESS
+                } else {
+                    var transactionResponse = TransactionResponse("Can't sent transaction!", "")
+                    response.errorBody()?.let {
+                        transactionResponse = Gson().fromJson(
+                            it.charStream(),
+                            TransactionResponse::class.java
+                        )
+                    }
+                    _transactionMessageError.value = transactionResponse.message
+                    _responseTransaction.value = TypeProcessTransaction.ERROR
                 }
-                _transactionMessageError.value = transactionResponse.message
+            } catch (e: IOException) {
+                _transactionMessageError.value = "Can't connect to server. Please, try again."
                 _responseTransaction.value = TypeProcessTransaction.ERROR
             }
         }

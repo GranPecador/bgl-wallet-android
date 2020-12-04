@@ -3,6 +3,7 @@ package com.origindev.bglwallet
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +17,7 @@ import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.Check
 import com.origindev.bglwallet.utils.SecSharPref
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class EnterMnemonicActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,41 +81,49 @@ class EnterMnemonicActivity : AppCompatActivity() {
 
     private fun getWallet(phrase: String) {
         lifecycleScope.launch {
-            val response = RetrofitClientInstance.instance.importWallet(
-                ImportModel(phrase)
-            )
-            if (response.isSuccessful) {
-                response.body()?.let { it1 ->
-                    val shar = SecSharPref()
-                    shar.setContext(applicationContext)
-                    shar.putPrivateKeyAndAddress(
-                        it1.privateKey,
-                        it1.address,
-                        it1.mnemonic
-                    )
+            try {
+                val response = RetrofitClientInstance.instance.importWallet(
+                    ImportModel(phrase)
+                )
+                if (response.isSuccessful) {
+                    response.body()?.let { it1 ->
+                        val shar = SecSharPref()
+                        shar.setContext(applicationContext)
+                        shar.putPrivateKeyAndAddress(
+                            it1.privateKey,
+                            it1.address,
+                            it1.mnemonic
+                        )
 
-                    val viewModel: FlagsViewModel = ViewModelProvider(
-                        this@EnterMnemonicActivity,
-                        FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(this@EnterMnemonicActivity))
-                    ).get(FlagsViewModel::class.java)
-                    viewModel.setLoggedIntoAccount(logged = true)
+                        val viewModel: FlagsViewModel = ViewModelProvider(
+                            this@EnterMnemonicActivity,
+                            FlagsViewModelFactory(FlagsPreferencesRepository.getInstance(this@EnterMnemonicActivity))
+                        ).get(FlagsViewModel::class.java)
+                        viewModel.setLoggedIntoAccount(logged = true)
 
-                    val intent =
-                        Intent(this@EnterMnemonicActivity, WalletActivity::class.java)
-                    intent.flags =
-                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+                        val intent =
+                            Intent(this@EnterMnemonicActivity, WalletActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    }
+                } else {
+                    var transactionResponse = TransactionResponse("Can't import!", "")
+                    response.errorBody()?.let {
+                        transactionResponse = Gson().fromJson(
+                            it.charStream(),
+                            TransactionResponse::class.java
+                        )
+                    }
+                    val dialog = MessageDialogFragment(transactionResponse.message)
+                    dialog.show(supportFragmentManager, "MessageDialogFragment")
                 }
-            } else {
-                var transactionResponse = TransactionResponse("Can't import!", "")
-                response.errorBody()?.let {
-                    transactionResponse = Gson().fromJson(
-                        it.charStream(),
-                        TransactionResponse::class.java
-                    )
-                }
-                val dialog = MessageDialogFragment(transactionResponse.message)
-                dialog.show(supportFragmentManager, "MessageDialogFragment")
+            } catch (e: IOException) {
+                Toast.makeText(
+                    this@EnterMnemonicActivity.applicationContext,
+                    "Can't connect to server. Please, try again.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
