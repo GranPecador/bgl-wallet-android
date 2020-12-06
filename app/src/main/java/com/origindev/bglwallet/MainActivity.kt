@@ -204,9 +204,14 @@ class MainActivity : AppCompatActivity(), SelectImportDialogFragment.OnOpenBrows
             val files = letDirectory.listFiles { _, filename ->
                 filename.startsWith("bgl_wallet_backup") && filename.endsWith(".txt")
             }
-            val adapter = BackupFilesAdapterRecyclerView(files, this)
-            val dialogFragment = FoundBackupFilesDialogFragment(adapter)
-            dialogFragment.show(supportFragmentManager, "FoundBackupFilesDialogFragment")
+            Toast.makeText(applicationContext, "Select .txt", Toast.LENGTH_SHORT).show()
+            if (files.isNullOrEmpty()) {
+                performFileSelection()
+            } else {
+                val adapter = BackupFilesAdapterRecyclerView(files, this)
+                val dialogFragment = FoundBackupFilesDialogFragment(adapter)
+                dialogFragment.show(supportFragmentManager, "FoundBackupFilesDialogFragment")
+            }
         } catch (e: IOException) {
         }
     }
