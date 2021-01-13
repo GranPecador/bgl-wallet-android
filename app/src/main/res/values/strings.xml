@@ -8,7 +8,7 @@
     <string name="second_text_intro">Use these secret words to restore access to your wallet if you lose your password or access to this device.</string>
     <string name="welcome_to_bitgesell">Bitgesell Wallet</string>
     <string name="title_activity_enter_mnemonic">Mnemonic phrase</string>
-    <string name="phrase_is_not_correct">\"Your phase isn\'t correct. The phrase consists of 24 words separated by a space.\"</string>
+    <string name="phrase_is_not_correct">Your phase isn\'t correct. The phrase consists of 24 words separated by a space.</string>
     <string name="found_backups">Found backups</string>
     <string name="found_backups_text">We found backups of wallet on your device. Do you want to import it?</string>
     <string name="click_on_file_for_import_text">Click on file which you want to import:</string>
