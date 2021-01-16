@@ -1,4 +1,4 @@
-package com.origindev.bglwallet
+package com.origindev.bglwallet.ui.wallet
 
 import android.content.Intent
 import android.net.Uri
@@ -7,6 +7,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.origindev.bglwallet.FlagsViewModel
+import com.origindev.bglwallet.FlagsViewModelFactory
+import com.origindev.bglwallet.MainActivity
+import com.origindev.bglwallet.R
 import com.origindev.bglwallet.repositories.FlagsPreferencesRepository
 import com.origindev.bglwallet.ui.wallet.dialogs.MessageDialogFragment
 import com.origindev.bglwallet.utils.SecSharPref

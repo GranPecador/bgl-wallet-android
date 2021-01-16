@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.origindev.bglwallet.ui.wallet.SettingsActivity
 
 
 class WalletActivity : AppCompatActivity() {
@@ -13,7 +14,6 @@ class WalletActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wallet)
         title = "My Wallet"
-        supportActionBar?.elevation = 0f
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

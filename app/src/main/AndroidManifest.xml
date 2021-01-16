@@ -20,9 +20,9 @@
         </activity>
         <activity
             android:name=".EnterMnemonicActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.wallet.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MnemonicActivity"
@@ -33,11 +33,11 @@
         <activity
             android:name=".WalletActivity"
             android:label="@string/title_activity_wallet"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Walletv1.WalletPage" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Walletv1"/>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
